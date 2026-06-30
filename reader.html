@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>同道 Bible — Reader v3</title>
+<style>
+:root{
+  --paper:#fbfaf7; --card:#fffdf9; --ink:#171b18; --muted:#746f66;
+  --line:#eadfce; --gold:#a77d3f; --green:#10221d; --pinyin:#2b775f;
+  --soft:#f3eadc; --scale:1;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(167,125,63,.10),transparent 30%),var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{min-height:100vh;display:grid;grid-template-columns:270px 1fr}
+aside{border-right:1px solid var(--line);padding:24px 20px;background:rgba(255,255,255,.44);height:100vh;position:sticky;top:0}
+.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+.logo-mark{width:42px;height:42px;border-radius:14px;background:#fff;position:relative;border:1px solid var(--line);box-shadow:0 10px 30px rgba(45,34,18,.08);overflow:hidden}
+.logo-mark svg{position:absolute;inset:5px;width:32px;height:32px}
+.logo-mark .star{position:absolute;right:5px;top:3px;color:var(--gold);font-size:13px}
+.wordmark{font-size:21px;font-weight:650}.wordmark .cn{font-family:"Kaiti TC","STKaiti","KaiTi",serif;color:var(--green);font-size:27px;letter-spacing:-.06em;margin-right:6px}.wordmark .en{font-family:Georgia,serif}
+.nav{display:grid;gap:8px}.nav button{border:1px solid transparent;background:transparent;color:var(--ink);border-radius:14px;padding:13px 14px;text-align:left;font-size:15px;cursor:pointer}.nav button.active{background:var(--soft);border-color:#eadcc7;color:var(--green);font-weight:650}
+.card{margin-top:28px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--card)}.card small{display:block;color:var(--muted);margin-bottom:8px}.today-ref{font-weight:700}.today-text{color:var(--muted);font-size:13px;line-height:1.45}
+.panel{margin-top:22px;display:grid;gap:14px}.label{color:var(--muted);font-size:13px;margin:0 0 7px}.segments{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:6px;display:grid;gap:6px}.segments button{border:0;border-radius:10px;padding:10px;background:transparent;color:var(--ink);cursor:pointer;text-align:left}.segments button.active{background:var(--soft);font-weight:650;color:var(--green)}
+.toggle{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 13px;display:flex;justify-content:space-between;align-items:center;font-size:14px}.switch{width:44px;height:24px;border-radius:999px;background:#c8c8c8;position:relative;cursor:pointer}.switch:after{content:"";position:absolute;width:20px;height:20px;left:2px;top:2px;background:#fff;border-radius:50%}.switch.on{background:#4d8f72}.switch.on:after{left:22px}
+main{min-width:0}.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(251,250,247,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:5}.left,.right{display:flex;gap:10px;align-items:center}select,.topbar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:15px}.topbar button{cursor:pointer}.mobile{display:none}
+.reader{max-width:1050px;margin:auto;padding:28px 38px 72px}.heading{display:flex;align-items:baseline;gap:15px;margin-bottom:14px}.heading h1{margin:0;font-size:30px;letter-spacing:-.02em}.heading span{color:var(--muted);font-size:15px}
+.testament-label{margin:18px 0 8px 48px;color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.verse{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:9px 0}.num{color:var(--gold);font-family:Georgia,serif;font-size:15px;padding-top:4px}
+.content{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}.translation{min-width:0}.translation + .translation{margin-top:0}
+.text{font-size:calc(20px*var(--scale));line-height:1.38}.text.en{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.01em}.text.zh{font-family:"Noto Serif CJK TC","Songti TC","PingFang TC",serif;font-size:calc(21px*var(--scale));line-height:1.42}.pinyin{color:var(--pinyin);font-size:calc(13.5px*var(--scale));line-height:1.32;margin-top:3px}
+.passage-note{margin:22px 0 0 48px;color:var(--muted);font-size:12px;line-height:1.6}.divider{height:1px;background:var(--line);margin:4px 0 2px 48px}
+.mode-en .content,.mode-zh .content{display:flex;flex-direction:column;gap:4px}.mode-en .text.en,.mode-zh .text.zh{font-size:calc(21px*var(--scale));line-height:1.38}.mode-en .text.zh,.mode-zh .text.en{font-size:calc(18px*var(--scale));line-height:1.35;color:#32342f}
+.bottom{display:none}
+@media(max-width:900px){.app{display:block}aside{display:none}.mobile{display:inline-block}.topbar{height:62px;padding:0 14px}.topbar select{max-width:148px}.reader{padding:22px 18px 86px}.content{display:block}.translation{margin-bottom:4px}.text,.text.en,.text.zh{font-size:calc(17.5px*var(--scale));line-height:1.36}.pinyin{font-size:calc(12.5px*var(--scale));line-height:1.3}.heading h1{font-size:24px}.verse{grid-template-columns:28px 1fr;gap:8px;padding:8px 0}.passage-note{margin-left:36px}.divider{margin-left:36px}.testament-label{margin-left:36px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;border-top:1px solid var(--line);background:rgba(251,250,247,.95);z-index:8}.bottom button{border:0;background:transparent;color:var(--ink);padding:10px 4px;font-size:12px;display:grid;gap:2px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="logo-row">
+    <span class="logo-mark">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M10 48 C21 42 20 31 31 24 C37 20 39 13 31 8 C46 12 49 25 39 33 C31 40 27 46 19 56" fill="none" stroke="#10221d" stroke-width="7" stroke-linecap="round"/>
+        <path d="M9 49 C23 45 34 43 48 41" fill="none" stroke="#10221d" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="star">✦</span>
+    </span>
+    <div class="wordmark"><span class="cn">同道</span><span class="en">Bible</span></div>
+  </div>
+  <nav class="nav"><button class="active">閱讀 Read</button><button>搜尋 Search</button><button>書籤 Bookmarks</button><button>歷史 History</button><button>設定 Settings</button></nav>
+  <div class="card"><small>Today 今日</small><div class="today-ref">John 3:16 約翰福音 3:16</div><div class="today-text">For God so loved the world...<br>神愛世人，甚至將他的獨生子...</div></div>
+  <div class="panel">
+    <div><p class="label">Reading order 閱讀順序</p><div class="segments" id="orders"><button data-mode="mode-side">Side by side 並排</button><button data-mode="mode-en">English → 中文</button><button class="active" data-mode="mode-zh">中文 → English</button></div></div>
+    <div class="toggle"><span>Show pinyin 顯示拼音</span><span id="pinyinSwitch" class="switch on"></span></div>
+  </div>
+</aside>
+<main>
+<header class="topbar">
+  <div class="left"><button class="mobile">☰</button><select id="bookSelect"><option value="john">John 約翰福音</option><option value="psalm">Psalm 詩篇</option><option value="genesis">Genesis 創世記</option></select><select id="chapterSelect"><option>3</option></select></div>
+  <div class="right"><button>⌕</button><button id="fontBtn">Aa</button><button id="pinyinBtn">拼</button></div>
+</header>
+<section class="reader mode-zh" id="reader">
+  <div class="heading"><h1 id="title">John 3:16–21</h1><span id="subtitle">約翰福音 3:16–21 · ESV × 和合本（繁體）</span></div>
+  <div id="testament" class="testament-label">New Testament 新約</div>
+  <article id="verses"></article>
+  <p class="passage-note">ESV® Text Edition: 2016. Copyright © 2001 by Crossway Bibles, a publishing ministry of Good News Publishers. Chinese text shown here is sample prototype text for layout testing.</p>
+</section>
+</main>
+<nav class="bottom"><button>閱讀<br>Read</button><button>搜尋<br>Search</button><button>書籤<br>Saved</button><button>設定<br>Settings</button></nav>
+</div>
+<script>
+const passages={
+john:{title:"John 3:16–21",subtitle:"約翰福音 3:16–21 · ESV × 和合本（繁體）",testament:"New Testament 新約",data:[
+{n:16,en:"For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life.",zh:"神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不至滅亡，反得永生。",py:"Shén ài shìrén, shènzhì jiāng tā de dúshēngzǐ cì gěi tāmen, jiào yīqiè xìn tā de, bùzhì mièwáng, fǎn dé yǒngshēng."},
+{n:17,en:"For God did not send his Son into the world to condemn the world, but in order that the world might be saved through him.",zh:"因為神差他的兒子降世，不是要定世人的罪，乃是要叫世人因他得救。",py:"Yīnwèi Shén chāi tā de érzi jiàngshì, búshì yào dìng shìrén de zuì, nǎishì yào jiào shìrén yīn tā dé jiù."},
+{n:18,en:"Whoever believes in him is not condemned, but whoever does not believe is condemned already, because he has not believed in the name of the only Son of God.",zh:"信他的人，不被定罪；不信的人，罪已經定了，因為他不信神獨生子的名。",py:"Xìn tā de rén, bú bèi dìngzuì; bù xìn de rén, zuì yǐjīng dìng le, yīnwèi tā bù xìn Shén dúshēngzǐ de míng."},
+{n:19,en:"And this is the judgment: the light has come into the world, and people loved the darkness rather than the light because their works were evil.",zh:"光來到世間，世人因自己的行為是惡的，不愛光，倒愛黑暗，定他們的罪就是在此。",py:"Guāng lái dào shìjiān, shìrén yīn zìjǐ de xíngwéi shì è de, bù ài guāng, dào ài hēi'àn, dìng tāmen de zuì jiù shì zài cǐ."},
+{n:20,en:"For everyone who does wicked things hates the light and does not come to the light, lest his works should be exposed.",zh:"凡作惡的便恨光，並不來就光，恐怕他的行為受責備。",py:"Fán zuò è de biàn hèn guāng, bìng bù lái jiù guāng, kǒngpà tā de xíngwéi shòu zébèi."},
+{n:21,en:"But whoever does what is true comes to the light, so that it may be clearly seen that his works have been carried out in God.",zh:"但行真理的必來就光，要顯明他所行的是靠神而行。",py:"Dàn xíng zhēnlǐ de bì lái jiù guāng, yào xiǎnmíng tā suǒ xíng de shì kào Shén ér xíng."}]},
+psalm:{title:"Psalm 23:1–6",subtitle:"詩篇 23:1–6 · ESV × 和合本（繁體）",testament:"Old Testament 舊約",data:[
+{n:1,en:"The LORD is my shepherd; I shall not want.",zh:"耶和華是我的牧者，我必不至缺乏。",py:"Yēhéhuá shì wǒ de mùzhě, wǒ bì bùzhì quēfá."},
+{n:2,en:"He makes me lie down in green pastures. He leads me beside still waters.",zh:"他使我躺臥在青草地上，領我在可安歇的水邊。",py:"Tā shǐ wǒ tǎngwò zài qīngcǎo dì shàng, lǐng wǒ zài kě ānxiē de shuǐ biān."},
+{n:3,en:"He restores my soul. He leads me in paths of righteousness for his name's sake.",zh:"他使我的靈魂甦醒，為自己的名引導我走義路。",py:"Tā shǐ wǒ de línghún sūxǐng, wèi zìjǐ de míng yǐndǎo wǒ zǒu yì lù."},
+{n:4,en:"Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.",zh:"我雖然行過死蔭的幽谷，也不怕遭害，因為你與我同在。",py:"Wǒ suīrán xíng guò sǐyīn de yōugǔ, yě bù pà zāohài, yīnwèi nǐ yǔ wǒ tóng zài."},
+{n:5,en:"You prepare a table before me in the presence of my enemies; you anoint my head with oil.",zh:"在我敵人面前，你為我擺設筵席；你用油膏了我的頭。",py:"Zài wǒ dírén miànqián, nǐ wèi wǒ bǎishè yánxí; nǐ yòng yóu gāo le wǒ de tóu."},
+{n:6,en:"Surely goodness and mercy shall follow me all the days of my life.",zh:"我一生一世必有恩惠慈愛隨著我。",py:"Wǒ yīshēng yīshì bì yǒu ēnhuì cí'ài suí zhe wǒ."}]},
+genesis:{title:"Genesis 1:1–5",subtitle:"創世記 1:1–5 · ESV × 和合本（繁體）",testament:"Old Testament 舊約",data:[
+{n:1,en:"In the beginning, God created the heavens and the earth.",zh:"起初，神創造天地。",py:"Qǐchū, Shén chuàngzào tiāndì."},
+{n:2,en:"The earth was without form and void, and darkness was over the face of the deep.",zh:"地是空虛混沌，淵面黑暗；神的靈運行在水面上。",py:"Dì shì kōngxū hùndùn, yuān miàn hēi'àn; Shén de líng yùnxíng zài shuǐmiàn shàng."},
+{n:3,en:"And God said, Let there be light, and there was light.",zh:"神說：要有光，就有了光。",py:"Shén shuō: yào yǒu guāng, jiù yǒu le guāng."},
+{n:4,en:"And God saw that the light was good. And God separated the light from the darkness.",zh:"神看光是好的，就把光暗分開了。",py:"Shén kàn guāng shì hǎo de, jiù bǎ guāng àn fēnkāi le."},
+{n:5,en:"God called the light Day, and the darkness he called Night.",zh:"神稱光為晝，稱暗為夜。",py:"Shén chēng guāng wéi zhòu, chēng àn wéi yè."}]}
+};
+let current="john",pinyin=true,scale=1,mode="mode-zh";
+function render(){
+ const p=passages[current];
+ document.getElementById("title").textContent=p.title;
+ document.getElementById("subtitle").textContent=p.subtitle;
+ document.getElementById("testament").textContent=p.testament;
+ document.getElementById("verses").innerHTML=p.data.map(v=>{
+   const zh=`<div class="translation zh-block"><div class="text zh">${v.zh}</div>${pinyin?`<div class="pinyin">${v.py}</div>`:""}</div>`;
+   const en=`<div class="translation en-block"><div class="text en">${v.en}</div></div>`;
+   let content = mode==="mode-en" ? en+zh : zh+en;
+   if(mode==="mode-side") content = en+zh;
+   return `<section class="verse"><div class="num">${v.n}</div><div class="content">${content}</div></section><div class="divider"></div>`;
+ }).join("");
+}
+document.getElementById("bookSelect").onchange=e=>{current=e.target.value;render()};
+document.querySelectorAll("#orders button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#orders button").forEach(x=>x.classList.remove("active"));b.classList.add("active");mode=b.dataset.mode;const r=document.getElementById("reader");r.className="reader "+mode;render()});
+function togglePinyin(){pinyin=!pinyin;document.getElementById("pinyinSwitch").classList.toggle("on",pinyin);render()}
+document.getElementById("pinyinSwitch").onclick=togglePinyin;document.getElementById("pinyinBtn").onclick=togglePinyin;
+document.getElementById("fontBtn").onclick=()=>{scale=scale>=1.2?.9:scale+.1;document.documentElement.style.setProperty("--scale",scale.toFixed(2))}
+render();
+</script>
+</body>
+</html>
