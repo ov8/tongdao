@@ -1,25 +1,29 @@
-# 同道 Bible
+# 同道 Bible — Next.js Preview
 
-> **Scripture Together.**
+## Run locally
 
-A modern bilingual Bible for English and Chinese readers.
+```bash
+npm install
+npm run dev
+```
 
-## Coming Soon
+Open:
 
-- 📖 ESV × CUNP (Traditional Chinese)
-- 🌏 English & Chinese side-by-side reading
-- 🈶 Pinyin support
-- 📚 Offline reading
-- ✍️ Bookmarks, highlights, and notes
-- ♿ Accessibility-first
-- 📱 Web first, with iOS and Android to follow
+```text
+http://localhost:3000
+http://localhost:3000/reader
+```
 
----
+## ESV token
 
-Built with ❤️ for churches, families, language learners, and anyone who wants to engage more deeply with God's Word.
+Create `.env.local` from `.env.example`:
 
-## Status
+```bash
+cp .env.example .env.local
+```
 
-🚧 Currently in active development.
+Then put the regenerated ESV token there. Never commit the real token.
 
-Early supporters and contributors are welcome!
+## GitHub Pages
+
+This project is configured for the `ov8/tongdao` GitHub Pages path using `basePath: /tongdao` in production.

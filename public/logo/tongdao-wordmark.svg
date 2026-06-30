@@ -1,0 +1,9 @@
+<svg width="780" height="220" viewBox="0 0 780 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(0 0)">
+    <path d="M42 122C76 104 74 65 109 38C131 21 136 -8 105 -26C161 -11 170 41 134 70C106 93 93 115 62 150" stroke="#10221D" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" transform="translate(20 40)"/>
+    <path d="M35 128C78 114 123 105 182 98" stroke="#10221D" stroke-width="8" stroke-linecap="round" transform="translate(20 40)"/>
+    <path d="M178 18L185 36L203 43L185 50L178 68L171 50L153 43L171 36L178 18Z" fill="#C79A5A"/>
+  </g>
+  <text x="250" y="95" fill="#10221D" font-size="62" font-family="Songti TC, Noto Serif CJK TC, serif" letter-spacing="4">同道</text>
+  <text x="250" y="156" fill="#10221D" font-size="44" font-family="Georgia, serif">Bible</text>
+</svg>
