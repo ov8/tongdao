@@ -1,91 +1,39 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>同道 Bible — Scripture Together</title>
-  <meta name="description" content="同道 Bible is a calm bilingual Bible for English and Chinese readers. Scripture Together." />
-  <meta property="og:title" content="同道 Bible — Scripture Together" />
-  <meta property="og:description" content="A calm bilingual Bible for English and Chinese readers, families, churches, and language learners." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>同道 Bible — Scripture Together</title>
+<style>
+:root{--paper:#fbfaf7;--ink:#171b18;--muted:#746f66;--line:#eadfce;--gold:#a77d3f;--green:#10221d;--card:#fffdf9}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);background:radial-gradient(circle at 14% 12%,rgba(167,125,63,.12),transparent 28%),linear-gradient(180deg,#fffdf9 0%,var(--paper) 70%,#f4efe6 100%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{min-height:100vh;max-width:1120px;margin:0 auto;padding:28px 24px 52px;display:flex;flex-direction:column}
+nav{display:flex;justify-content:space-between;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:700;text-decoration:none;color:var(--ink)}
+.mark{width:42px;height:42px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 10px 30px rgba(45,34,18,.08)}.mark svg{width:32px;height:32px}
+.brand-cn{font-family:"Kaiti TC","STKaiti","KaiTi","Songti TC",serif;font-size:27px;letter-spacing:-.06em;color:var(--green);margin-right:3px}.brand-en{font-family:Georgia,serif;font-size:23px}.nav-link{text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.62);color:var(--ink);border-radius:999px;padding:12px 16px;font-size:15px}
+.hero{flex:1;display:grid;place-items:center;text-align:center;padding:72px 0 56px}.hero-inner{width:min(760px,100%)}.hero-mark{width:118px;height:118px;border-radius:30px;margin:0 auto 24px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 20px 60px rgba(45,34,18,.08)}.hero-mark svg{width:88px;height:88px}
+h1{margin:0;font-size:clamp(54px,9vw,112px);letter-spacing:-.08em;line-height:.95;font-weight:800}.title-cn{font-family:"Kaiti TC","STKaiti","KaiTi","Songti TC",serif;color:var(--green);margin-right:14px}.title-en{font-family:Georgia,serif;letter-spacing:-.055em}.tagline{margin:28px 0 0;font-family:Georgia,serif;font-size:clamp(42px,7vw,82px);line-height:1;letter-spacing:-.055em}.sub{margin:22px auto 0;max-width:680px;color:var(--muted);font-size:21px;line-height:1.5}
+.waitlist{width:min(580px,100%);margin:34px auto 0;display:grid;grid-template-columns:1fr auto;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.74);overflow:hidden;box-shadow:0 18px 50px rgba(62,45,24,.07)}.waitlist input{min-width:0;border:0;background:transparent;color:var(--ink);padding:18px 20px;font-size:17px;outline:none}.waitlist button{border:0;background:var(--green);color:white;padding:0 26px;font-size:16px;font-weight:700;cursor:pointer}.note{margin-top:13px;color:var(--muted);font-size:13px}
+.actions{margin-top:28px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.button{display:inline-block;text-decoration:none;border-radius:999px;padding:14px 18px;font-weight:700}.button.primary{background:var(--green);color:white}.button.secondary{border:1px solid var(--line);background:rgba(255,255,255,.62);color:var(--ink)}footer{text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:640px){main{padding:22px 16px 42px}.nav-link{display:none}.hero{padding-top:54px}.hero-mark{width:92px;height:92px;border-radius:24px}.hero-mark svg{width:68px;height:68px}.waitlist{grid-template-columns:1fr}.waitlist button{min-height:56px}h1{font-size:clamp(44px,14vw,70px)}}
+</style>
 </head>
 <body>
-  <main class="page">
-    <header class="topbar" aria-label="Site header">
-      <a class="brand" href="./" aria-label="同道 Bible home">
-        <span class="brand-cn">同道</span>
-        <span class="brand-en">Bible</span>
-      </a>
-      <span class="coming-soon">Coming soon</span>
-    </header>
-
-    <section class="hero" aria-labelledby="main-title">
-      <div class="wordmark" aria-label="同道 Bible">
-        <div class="wordmark-cn">同道</div>
-      </div>
-
-      <p class="eyebrow">ESV × CUNP · Traditional Chinese first</p>
-
-      <h1 id="main-title">Scripture Together.</h1>
-
-      <p class="subtitle">
-        A calm bilingual Bible for English and Chinese readers, families, churches, and language learners.
-      </p>
-
-      <!-- Waitlist form placeholder. Replace this form with Kit/ConvertKit embed code later. -->
-      <form class="waitlist" id="waitlist-form">
-        <label class="sr-only" for="email">Email address</label>
-        <input id="email" name="email" type="email" placeholder="Enter your email" autocomplete="email" required />
-        <button type="submit">Join the waitlist</button>
-      </form>
-
-      <p style="margin-top: 16px;">
-
-  <a href="reader.html">Open reader preview</a>
-
-</p>
-
-      <p class="note" id="form-note">No spam. Just early access and occasional product updates.</p>
-
-      <ul class="features" aria-label="Coming soon features">
-        <li>
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-          </span>
-          <span>Parallel<br />Reading</span>
-        </li>
-        <li>
-          <span class="icon text-icon" aria-hidden="true">文</span>
-          <span>English &<br />Chinese</span>
-        </li>
-        <li>
-          <span class="icon text-icon" aria-hidden="true">ā</span>
-          <span>Pinyin<br />Support</span>
-        </li>
-        <li>
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
-          </span>
-          <span>Offline<br />Reading</span>
-        </li>
-        <li>
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Z"/><path d="m14 7 3 3"/></svg>
-          </span>
-          <span>Notes &<br />Highlights</span>
-        </li>
-        <li>
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="10" cy="5" r="2"/><path d="M10 8v5h4l3 6M7 11a6 6 0 1 0 7 8M10 13h-3"/></svg>
-          </span>
-          <span>Accessibility<br />First</span>
-        </li>
-      </ul>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+<main>
+<nav>
+<a class="brand" href="./"><span class="mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M10 48 C21 42 20 31 31 24 C37 20 39 13 31 8 C46 12 49 25 39 33 C31 40 27 46 19 56" stroke="#10221D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 49 C23 45 34 43 48 41" stroke="#10221D" stroke-width="3" stroke-linecap="round"/><path d="M48 5L52 15L62 19L52 23L48 33L44 23L34 19L44 15L48 5Z" fill="#A77D3F"/></svg></span><span><span class="brand-cn">同道</span><span class="brand-en">Bible</span></span></a>
+<a class="nav-link" href="reader.html">Open reader preview</a>
+</nav>
+<section class="hero"><div class="hero-inner">
+<div class="hero-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M10 48 C21 42 20 31 31 24 C37 20 39 13 31 8 C46 12 49 25 39 33 C31 40 27 46 19 56" stroke="#10221D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 49 C23 45 34 43 48 41" stroke="#10221D" stroke-width="3" stroke-linecap="round"/><path d="M48 5L52 15L62 19L52 23L48 33L44 23L34 19L44 15L48 5Z" fill="#A77D3F"/></svg></div>
+<h1><span class="title-cn">同道</span><span class="title-en">Bible</span></h1>
+<p class="tagline">Scripture Together.</p>
+<p class="sub">A calm bilingual Bible for English and Chinese readers, families, churches, and language learners.</p>
+<form class="waitlist" onsubmit="event.preventDefault();document.getElementById('note').textContent='Thank you for joining us. We’ll let you know when the first public preview is ready.';"><input type="email" required placeholder="Email / 電子郵件" aria-label="Email address"><button type="submit">Join the waitlist</button></form>
+<p class="note" id="note">No spam. Just early access and occasional product updates.</p>
+<div class="actions"><a class="button primary" href="reader.html">Open reader preview</a><a class="button secondary" href="https://github.com/ov8/tongdao">View on GitHub</a></div>
+</div></section>
+<footer>© 2026 同道 Bible · Scripture Together.</footer>
+</main>
 </body>
 </html>
