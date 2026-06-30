@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>同道 Bible — Reader</title>
+<title>同道 Bible — Reader v3</title>
 <style>
 :root{
   --paper:#fbfaf7; --card:#fffdf9; --ink:#171b18; --muted:#746f66;
@@ -31,11 +31,43 @@ main{min-width:0}.topbar{height:72px;border-bottom:1px solid var(--line);display
 .text{font-size:calc(20px*var(--scale));line-height:1.38}.text.en{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.01em}.text.zh{font-family:"Noto Serif CJK TC","Songti TC","PingFang TC",serif;font-size:calc(21px*var(--scale));line-height:1.42}.pinyin{color:var(--pinyin);font-size:calc(13.5px*var(--scale));line-height:1.32;margin-top:3px}
 .passage-note{margin:22px 0 0 48px;color:var(--muted);font-size:12px;line-height:1.6}.divider{height:1px;background:var(--line);margin:4px 0 2px 48px}
 .mode-en .content,.mode-zh .content{display:flex;flex-direction:column;gap:4px}.mode-en .text.en,.mode-zh .text.zh{font-size:calc(21px*var(--scale));line-height:1.38}.mode-en .text.zh,.mode-zh .text.en{font-size:calc(18px*var(--scale));line-height:1.35;color:#32342f}
+
+.mobile-overlay{display:none}
+.mobile-drawer{display:none}
+body.menu-open{overflow:hidden}
 .bottom{display:none}
-@media(max-width:900px){.app{display:block}aside{display:none}.mobile{display:inline-block}.topbar{height:62px;padding:0 14px}.topbar select{max-width:148px}.reader{padding:22px 18px 86px}.content{display:block}.translation{margin-bottom:4px}.text,.text.en,.text.zh{font-size:calc(17.5px*var(--scale));line-height:1.36}.pinyin{font-size:calc(12.5px*var(--scale));line-height:1.3}.heading h1{font-size:24px}.verse{grid-template-columns:28px 1fr;gap:8px;padding:8px 0}.passage-note{margin-left:36px}.divider{margin-left:36px}.testament-label{margin-left:36px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;border-top:1px solid var(--line);background:rgba(251,250,247,.95);z-index:8}.bottom button{border:0;background:transparent;color:var(--ink);padding:10px 4px;font-size:12px;display:grid;gap:2px}}
+
+@media(max-width:900px){.app{display:block}aside{display:none}.mobile{display:inline-block}
+.mobile-overlay{display:block;position:fixed;inset:0;background:rgba(16,24,22,.28);z-index:20;opacity:0;pointer-events:none;transition:.16s}
+.mobile-drawer{display:block;position:fixed;left:0;top:0;bottom:0;width:min(84vw,310px);background:var(--paper);border-right:1px solid var(--line);z-index:21;padding:22px 18px;transform:translateX(-100%);transition:.18s ease;box-shadow:20px 0 60px rgba(0,0,0,.12)}
+body.menu-open .mobile-overlay{opacity:1;pointer-events:auto}
+body.menu-open .mobile-drawer{transform:translateX(0)}
+.mobile-drawer .logo-row{margin-bottom:22px}
+.mobile-drawer .nav{margin-bottom:20px}
+.topbar{height:62px;padding:0 14px}.topbar select{max-width:148px}.reader{padding:22px 18px 86px}.content{display:block}.translation{margin-bottom:4px}.text,.text.en,.text.zh{font-size:calc(17.5px*var(--scale));line-height:1.36}.pinyin{font-size:calc(12.5px*var(--scale));line-height:1.3}.heading h1{font-size:24px}.verse{grid-template-columns:28px 1fr;gap:8px;padding:8px 0}.passage-note{margin-left:36px}.divider{margin-left:36px}.testament-label{margin-left:36px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;border-top:1px solid var(--line);background:rgba(251,250,247,.95);z-index:8}.bottom button{border:0;background:transparent;color:var(--ink);padding:10px 4px;font-size:12px;display:grid;gap:2px}}
 </style>
 </head>
 <body>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="logo-row">
+    <span class="logo-mark">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M10 48 C21 42 20 31 31 24 C37 20 39 13 31 8 C46 12 49 25 39 33 C31 40 27 46 19 56" fill="none" stroke="#10221d" stroke-width="7" stroke-linecap="round"/>
+        <path d="M9 49 C23 45 34 43 48 41" fill="none" stroke="#10221d" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="star">✦</span>
+    </span>
+    <div class="wordmark"><span class="cn">同道</span><span class="en">Bible</span></div>
+  </div>
+  <nav class="nav"><button class="active">閱讀 Read</button><button>搜尋 Search</button><button>書籤 Bookmarks</button><button>歷史 History</button><button>設定 Settings</button></nav>
+  <div class="panel">
+    <div><p class="label">Reading order 閱讀順序</p><div class="segments" id="mobileOrders"><button data-mode="mode-side">Side by side 並排</button><button data-mode="mode-en">English → 中文</button><button class="active" data-mode="mode-zh">中文 → English</button></div></div>
+    <div class="toggle"><span>Show pinyin 顯示拼音</span><span id="mobilePinyinSwitch" class="switch on"></span></div>
+  </div>
+</div>
+
 <div class="app">
 <aside>
   <div class="logo-row">
@@ -93,6 +125,26 @@ genesis:{title:"Genesis 1:1–5",subtitle:"創世記 1:1–5 · ESV × 和合本
 {n:5,en:"God called the light Day, and the darkness he called Night.",zh:"神稱光為晝，稱暗為夜。",py:"Shén chēng guāng wéi zhòu, chēng àn wéi yè."}]}
 };
 let current="john",pinyin=true,scale=1,mode="mode-zh";
+
+function setMode(nextMode){
+ mode=nextMode;
+ document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>{
+   b.classList.toggle("active", b.dataset.mode===mode);
+ });
+ const r=document.getElementById("reader");
+ r.className="reader "+mode;
+ render();
+}
+
+function setPinyin(nextValue){
+ pinyin=nextValue;
+ document.querySelectorAll("#pinyinSwitch,#mobilePinyinSwitch").forEach(s=>s.classList.toggle("on",pinyin));
+ render();
+}
+
+document.querySelector(".mobile").onclick=()=>document.body.classList.add("menu-open");
+document.getElementById("mobileOverlay").onclick=()=>document.body.classList.remove("menu-open");
+
 function render(){
  const p=passages[current];
  document.getElementById("title").textContent=p.title;
@@ -107,9 +159,9 @@ function render(){
  }).join("");
 }
 document.getElementById("bookSelect").onchange=e=>{current=e.target.value;render()};
-document.querySelectorAll("#orders button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#orders button").forEach(x=>x.classList.remove("active"));b.classList.add("active");mode=b.dataset.mode;const r=document.getElementById("reader");r.className="reader "+mode;render()});
-function togglePinyin(){pinyin=!pinyin;document.getElementById("pinyinSwitch").classList.toggle("on",pinyin);render()}
-document.getElementById("pinyinSwitch").onclick=togglePinyin;document.getElementById("pinyinBtn").onclick=togglePinyin;
+document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+function togglePinyin(){setPinyin(!pinyin)}
+document.getElementById("pinyinSwitch").onclick=togglePinyin;document.getElementById("mobilePinyinSwitch").onclick=togglePinyin;document.getElementById("pinyinBtn").onclick=togglePinyin;
 document.getElementById("fontBtn").onclick=()=>{scale=scale>=1.2?.9:scale+.1;document.documentElement.style.setProperty("--scale",scale.toFixed(2))}
 render();
 </script>
