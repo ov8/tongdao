@@ -28,7 +28,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 .verse{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #EEE8DF}.num{color:var(--gold);font-family:Georgia,serif;padding-top:4px}
 .content{display:flex;flex-direction:column;gap:5px}.zh{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;font-size:clamp(1.18rem,1.4vw,1.34rem);line-height:1.62;margin:0}.en{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.02rem,1.15vw,1.15rem);line-height:1.62;color:#3E403C;margin:0}.py{font-size:.84rem;line-height:1.55;color:#4C7566;margin:0}
 .side .content{display:grid;grid-template-columns:1fr 1fr;gap:36px}.loading,.error{padding:70px 10px;text-align:center;color:var(--muted);line-height:1.6}.error{color:#8A4C40}.retry{margin-top:12px;border:1px solid var(--line);background:#fff;padding:9px 13px;border-radius:9px;cursor:pointer}
-.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}.content.side-by-side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:44px;align-items:start}.content.side-by-side .zhcol,.content.side-by-side .encol{min-width:0}.content.side-by-side .zhcol{display:flex;flex-direction:column;gap:6px}@media(max-width:760px){.content.side-by-side{grid-template-columns:1fr;row-gap:12px;column-gap:0}}
+.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.verse-tools{display:flex;gap:6px;margin-top:8px}.verse-tool{border:1px solid var(--line);background:#fff;color:var(--gold);width:30px;height:30px;border-radius:999px;cursor:pointer;padding:0}.verse-tool.saved{background:var(--cream);color:var(--forest)}.searchbar{display:none;gap:8px;align-items:center;padding:12px 0 18px}.searchbar.open{display:flex}.searchbar input{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font-size:15px}.searchbar button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}.search-hit{background:#fff3cf;border-radius:8px}.panel-title{font-family:Georgia,"Noto Serif TC",serif;font-size:28px;margin:0 0 18px}.bookmark-list{display:grid;gap:10px}.bookmark-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px;cursor:pointer}.bookmark-card strong{display:block;margin-bottom:6px;color:var(--forest)}.bookmark-card p{margin:0;color:var(--muted);line-height:1.45}.empty{color:var(--muted);padding:28px 0}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}.content.side-by-side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:44px;align-items:start}.content.side-by-side .zhcol,.content.side-by-side .encol{min-width:0}.content.side-by-side .zhcol{display:flex;flex-direction:column;gap:6px}@media(max-width:760px){.content.side-by-side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:16px;row-gap:0}.content.side-by-side .zh{font-size:.92rem;line-height:1.48}.content.side-by-side .py{font-size:.68rem;line-height:1.38}.content.side-by-side .en{font-size:.82rem;line-height:1.48}}
 .scrim{display:none}
 @media(max-width:800px){
   .app{display:block}aside{position:fixed;left:0;top:0;bottom:0;width:min(84vw,300px);height:100vh;z-index:21;transform:translateX(-100%);transition:.18s;background:#F8F4ED}.app.open aside{transform:translateX(0)}
@@ -42,14 +42,15 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 <div class="app" id="app">
 <div class="scrim" id="scrim"></div>
 <aside>
-  <div class="brand"><span class="cn">同道</span>Bible</div>
+  <a class="brand" href="index.html" style="display:block;text-decoration:none"><span class="cn">同道</span>Bible</a>
   <nav class="nav">
-    <button class="active">閱讀 Read</button>
-    <button disabled>搜尋 Search</button>
-    <button disabled>書籤 Bookmarks</button>
-    <button disabled>設定 Settings</button>
+    <button id="homeBtn">首頁 Home</button>
+    <button class="active" id="readBtn">閱讀 Read</button>
+    <button id="searchBtn">搜尋 Search</button>
+    <button id="bookmarksBtn">書籤 Bookmarks</button>
+    <button id="settingsBtn">設定 Settings</button>
   </nav>
-  <div class="settings">
+  <div class="settings" id="settingsPanel">
     <p class="small">Reading order 閱讀順序</p>
     <div class="mode" id="modes">
       <button data-mode="side">Side by side 並排</button>
@@ -68,7 +69,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
   <div class="spacer"></div><div class="reader-tools" aria-label="Reading controls"><button class="toolbtn" id="fontDown" aria-label="Decrease text size">A−</button><button class="toolbtn" id="fontUp" aria-label="Increase text size">A+</button></div>
 </header>
 
-<section class="reader" id="reader"></section>
+<section class="reader"><div class="searchbar" id="searchbar"><input id="searchInput" type="search" placeholder="Search this chapter / 搜尋本章"><button id="searchGo">Search</button><button id="searchClose" aria-label="Close search">×</button></div><div id="reader"></div></section>
 </main>
 </div>
 
@@ -93,7 +94,7 @@ const BOOKS=[
 const bookEl=document.getElementById("book");
 const chapterEl=document.getElementById("chapter");
 const reader=document.getElementById("reader");
-let currentBook=43,currentChapter=3,mode="zh",showPinyin=true,fontScale=1;
+let currentBook=43,currentChapter=3,mode="zh",showPinyin=true,fontScale=1,currentZh=[],currentEn=[];
 
 function setupBooks(){
   const ot=document.createElement("optgroup");ot.label="舊約 · Old Testament";
@@ -167,7 +168,7 @@ async function load(){
       fetchChapter("cut",currentBook,currentChapter),
       fetchChapter("asv",currentBook,currentChapter)
     ]);
-    render(zh,en);
+    currentZh=zh;currentEn=en;render(zh,en);
   }catch(err){
     console.error(err);
     reader.innerHTML=`<div class="error">這一章暫時無法載入。<br>This chapter did not load.<br><button class="retry" onclick="load()">Try again</button></div>`;
@@ -199,7 +200,8 @@ function render(zh,en){
     }else{
       content=mode==="en"?e+chineseBlock:chineseBlock+e;
     }
-    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}"><div class="num" aria-hidden="true">${v.n}</div><div class="${contentClass}">${content}</div></article>`;
+    const saved=isBookmarked(currentBook,currentChapter,v.n);
+    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}" data-search="${escapeHtml((v.text+" "+(englishByVerse.get(v.n)||"")).toLowerCase())}"><div class="num" aria-hidden="true">${v.n}</div><div><div class="${contentClass}">${content}</div><div class="verse-tools"><button class="verse-tool ${saved?"saved":""}" data-bookmark="${v.n}" aria-label="${saved?"Remove bookmark":"Bookmark verse"}">${saved?"★":"☆"}</button></div></div></article>`;
   });
   const bIndex=BOOKS.findIndex(x=>x.n===currentBook);
   const prevDisabled=currentChapter===1 && bIndex===0;
@@ -211,7 +213,62 @@ function render(zh,en){
   const prev=document.getElementById("prevChapter"), next=document.getElementById("nextChapter");
   if(prev)prev.onclick=()=>moveChapter(-1);
   if(next)next.onclick=()=>moveChapter(1);
+  document.querySelectorAll("[data-bookmark]").forEach(btn=>{
+    btn.onclick=()=>toggleBookmark(Number(btn.dataset.bookmark));
+  });
 }
+
+function getBookmarks(){
+  try{return JSON.parse(localStorage.getItem("tongdaoBookmarks")||"[]")}catch(e){return[]}
+}
+function saveBookmarks(items){localStorage.setItem("tongdaoBookmarks",JSON.stringify(items))}
+function isBookmarked(book,chapter,verse){
+  return getBookmarks().some(x=>x.book===book&&x.chapter===chapter&&x.verse===verse)
+}
+function toggleBookmark(verse){
+  let items=getBookmarks();
+  const idx=items.findIndex(x=>x.book===currentBook&&x.chapter===currentChapter&&x.verse===verse);
+  if(idx>=0){items.splice(idx,1)}
+  else{
+    const b=BOOKS.find(x=>x.n===currentBook);
+    const z=currentZh.find(x=>x.n===verse);
+    const e=currentEn.find(x=>x.n===verse);
+    items.push({book:currentBook,chapter:currentChapter,verse,bookZh:b.zh,bookEn:b.en,zh:z?.text||"",en:e?.text||""});
+  }
+  saveBookmarks(items);render(currentZh,currentEn);
+}
+function showBookmarks(){
+  const items=getBookmarks();
+  const r=document.getElementById("reader");
+  document.getElementById("searchbar").classList.remove("open");
+  r.className="reader-view";
+  if(!items.length){r.innerHTML='<h2 class="panel-title">書籤 Bookmarks</h2><div class="empty">No bookmarks yet. Tap ☆ beside a verse to save it.</div>';return}
+  r.innerHTML='<h2 class="panel-title">書籤 Bookmarks</h2><div class="bookmark-list">'+items.map((x,i)=>`<div class="bookmark-card" data-bm="${i}"><strong>${x.bookZh} ${x.chapter}:${x.verse} · ${x.bookEn}</strong><p>${escapeHtml(x.zh)}</p></div>`).join("")+'</div>';
+  r.querySelectorAll("[data-bm]").forEach(card=>card.onclick=async()=>{
+    const x=items[Number(card.dataset.bm)];
+    currentBook=x.book;currentChapter=x.chapter;bookEl.value=String(currentBook);setupChapters();chapterEl.value=String(currentChapter);
+    await load();setTimeout(()=>document.getElementById("v"+x.verse)?.scrollIntoView({behavior:"smooth",block:"center"}),150);
+  });
+}
+function showReader(){
+  document.getElementById("searchbar").classList.remove("open");
+  if(currentZh.length)render(currentZh,currentEn); else load();
+}
+function openSearch(){
+  showReader();
+  const bar=document.getElementById("searchbar");
+  bar.classList.add("open");
+  document.getElementById("searchInput").focus();
+}
+function runSearch(){
+  const q=document.getElementById("searchInput").value.trim().toLowerCase();
+  document.querySelectorAll(".verse").forEach(v=>v.classList.remove("search-hit"));
+  if(!q)return;
+  const hit=[...document.querySelectorAll(".verse")].find(v=>(v.dataset.search||"").includes(q));
+  if(hit){hit.classList.add("search-hit");hit.scrollIntoView({behavior:"smooth",block:"center"})}
+  else alert("No match in this chapter / 本章找不到");
+}
+
 function moveChapter(delta){
   const bIndex=BOOKS.findIndex(x=>x.n===currentBook), b=BOOKS[bIndex];
   if(delta<0){
@@ -234,6 +291,18 @@ document.querySelectorAll("#modes button").forEach(btn=>btn.onclick=()=>{
 });
 document.getElementById("menu").onclick=()=>document.getElementById("app").classList.add("open");
 document.getElementById("scrim").onclick=()=>document.getElementById("app").classList.remove("open");
+
+document.getElementById("homeBtn").onclick=()=>location.href="index.html";
+document.getElementById("readBtn").onclick=()=>{showReader();document.getElementById("app").classList.remove("open")};
+document.getElementById("searchBtn").onclick=()=>{openSearch();document.getElementById("app").classList.remove("open")};
+document.getElementById("bookmarksBtn").onclick=()=>{showBookmarks();document.getElementById("app").classList.remove("open")};
+document.getElementById("settingsBtn").onclick=()=>{
+  document.getElementById("settingsPanel").scrollIntoView({behavior:"smooth",block:"start"});
+};
+document.getElementById("searchGo").onclick=runSearch;
+document.getElementById("searchClose").onclick=()=>document.getElementById("searchbar").classList.remove("open");
+document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch()});
+
 document.getElementById("fontDown").onclick=()=>{fontScale=Math.max(.85,fontScale-.1);load()};
 document.getElementById("fontUp").onclick=()=>{fontScale=Math.min(1.5,fontScale+.1);load()};
 document.getElementById("pinyinSwitch").onclick=()=>{
