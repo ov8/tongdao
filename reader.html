@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>同道 Bible — Reader</title>
+<title>同道 Bible — Reader v3</title>
 <style>
 :root{
   --paper:#fbfaf7; --card:#fffdf9; --ink:#171b18; --muted:#746f66;
@@ -102,68 +102,90 @@ body.menu-open .mobile-drawer{transform:translateX(0)}
 <nav class="bottom"><button>閱讀<br>Read</button><button>搜尋<br>Search</button><button>書籤<br>Saved</button><button>設定<br>Settings</button></nav>
 </div>
 <script>
-const passages={
-john:{title:"John 3:16–21",subtitle:"約翰福音 3:16–21 · ESV × 和合本（繁體）",testament:"New Testament 新約",data:[
-{n:16,en:"For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life.",zh:"神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不至滅亡，反得永生。",py:"Shén ài shìrén, shènzhì jiāng tā de dúshēngzǐ cì gěi tāmen, jiào yīqiè xìn tā de, bùzhì mièwáng, fǎn dé yǒngshēng."},
-{n:17,en:"For God did not send his Son into the world to condemn the world, but in order that the world might be saved through him.",zh:"因為神差他的兒子降世，不是要定世人的罪，乃是要叫世人因他得救。",py:"Yīnwèi Shén chāi tā de érzi jiàngshì, búshì yào dìng shìrén de zuì, nǎishì yào jiào shìrén yīn tā dé jiù."},
-{n:18,en:"Whoever believes in him is not condemned, but whoever does not believe is condemned already, because he has not believed in the name of the only Son of God.",zh:"信他的人，不被定罪；不信的人，罪已經定了，因為他不信神獨生子的名。",py:"Xìn tā de rén, bú bèi dìngzuì; bù xìn de rén, zuì yǐjīng dìng le, yīnwèi tā bù xìn Shén dúshēngzǐ de míng."},
-{n:19,en:"And this is the judgment: the light has come into the world, and people loved the darkness rather than the light because their works were evil.",zh:"光來到世間，世人因自己的行為是惡的，不愛光，倒愛黑暗，定他們的罪就是在此。",py:"Guāng lái dào shìjiān, shìrén yīn zìjǐ de xíngwéi shì è de, bù ài guāng, dào ài hēi'àn, dìng tāmen de zuì jiù shì zài cǐ."},
-{n:20,en:"For everyone who does wicked things hates the light and does not come to the light, lest his works should be exposed.",zh:"凡作惡的便恨光，並不來就光，恐怕他的行為受責備。",py:"Fán zuò è de biàn hèn guāng, bìng bù lái jiù guāng, kǒngpà tā de xíngwéi shòu zébèi."},
-{n:21,en:"But whoever does what is true comes to the light, so that it may be clearly seen that his works have been carried out in God.",zh:"但行真理的必來就光，要顯明他所行的是靠神而行。",py:"Dàn xíng zhēnlǐ de bì lái jiù guāng, yào xiǎnmíng tā suǒ xíng de shì kào Shén ér xíng."}]},
-psalm:{title:"Psalm 23:1–6",subtitle:"詩篇 23:1–6 · ESV × 和合本（繁體）",testament:"Old Testament 舊約",data:[
-{n:1,en:"The LORD is my shepherd; I shall not want.",zh:"耶和華是我的牧者，我必不至缺乏。",py:"Yēhéhuá shì wǒ de mùzhě, wǒ bì bùzhì quēfá."},
-{n:2,en:"He makes me lie down in green pastures. He leads me beside still waters.",zh:"他使我躺臥在青草地上，領我在可安歇的水邊。",py:"Tā shǐ wǒ tǎngwò zài qīngcǎo dì shàng, lǐng wǒ zài kě ānxiē de shuǐ biān."},
-{n:3,en:"He restores my soul. He leads me in paths of righteousness for his name's sake.",zh:"他使我的靈魂甦醒，為自己的名引導我走義路。",py:"Tā shǐ wǒ de línghún sūxǐng, wèi zìjǐ de míng yǐndǎo wǒ zǒu yì lù."},
-{n:4,en:"Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.",zh:"我雖然行過死蔭的幽谷，也不怕遭害，因為你與我同在。",py:"Wǒ suīrán xíng guò sǐyīn de yōugǔ, yě bù pà zāohài, yīnwèi nǐ yǔ wǒ tóng zài."},
-{n:5,en:"You prepare a table before me in the presence of my enemies; you anoint my head with oil.",zh:"在我敵人面前，你為我擺設筵席；你用油膏了我的頭。",py:"Zài wǒ dírén miànqián, nǐ wèi wǒ bǎishè yánxí; nǐ yòng yóu gāo le wǒ de tóu."},
-{n:6,en:"Surely goodness and mercy shall follow me all the days of my life.",zh:"我一生一世必有恩惠慈愛隨著我。",py:"Wǒ yīshēng yīshì bì yǒu ēnhuì cí'ài suí zhe wǒ."}]},
-genesis:{title:"Genesis 1:1–5",subtitle:"創世記 1:1–5 · ESV × 和合本（繁體）",testament:"Old Testament 舊約",data:[
-{n:1,en:"In the beginning, God created the heavens and the earth.",zh:"起初，神創造天地。",py:"Qǐchū, Shén chuàngzào tiāndì."},
-{n:2,en:"The earth was without form and void, and darkness was over the face of the deep.",zh:"地是空虛混沌，淵面黑暗；神的靈運行在水面上。",py:"Dì shì kōngxū hùndùn, yuān miàn hēi'àn; Shén de líng yùnxíng zài shuǐmiàn shàng."},
-{n:3,en:"And God said, Let there be light, and there was light.",zh:"神說：要有光，就有了光。",py:"Shén shuō: yào yǒu guāng, jiù yǒu le guāng."},
-{n:4,en:"And God saw that the light was good. And God separated the light from the darkness.",zh:"神看光是好的，就把光暗分開了。",py:"Shén kàn guāng shì hǎo de, jiù bǎ guāng àn fēnkāi le."},
-{n:5,en:"God called the light Day, and the darkness he called Night.",zh:"神稱光為晝，稱暗為夜。",py:"Shén chēng guāng wéi zhòu, chēng àn wéi yè."}]}
-};
-let current="john",pinyin=true,scale=1,mode="mode-zh";
+const books=[
+[1,"Genesis","創世記",50,"OT"],[2,"Exodus","出埃及記",40,"OT"],[3,"Leviticus","利未記",27,"OT"],[4,"Numbers","民數記",36,"OT"],[5,"Deuteronomy","申命記",34,"OT"],
+[6,"Joshua","約書亞記",24,"OT"],[7,"Judges","士師記",21,"OT"],[8,"Ruth","路得記",4,"OT"],[9,"1 Samuel","撒母耳記上",31,"OT"],[10,"2 Samuel","撒母耳記下",24,"OT"],
+[11,"1 Kings","列王紀上",22,"OT"],[12,"2 Kings","列王紀下",25,"OT"],[13,"1 Chronicles","歷代志上",29,"OT"],[14,"2 Chronicles","歷代志下",36,"OT"],[15,"Ezra","以斯拉記",10,"OT"],
+[16,"Nehemiah","尼希米記",13,"OT"],[17,"Esther","以斯帖記",10,"OT"],[18,"Job","約伯記",42,"OT"],[19,"Psalms","詩篇",150,"OT"],[20,"Proverbs","箴言",31,"OT"],
+[21,"Ecclesiastes","傳道書",12,"OT"],[22,"Song of Solomon","雅歌",8,"OT"],[23,"Isaiah","以賽亞書",66,"OT"],[24,"Jeremiah","耶利米書",52,"OT"],[25,"Lamentations","耶利米哀歌",5,"OT"],
+[26,"Ezekiel","以西結書",48,"OT"],[27,"Daniel","但以理書",12,"OT"],[28,"Hosea","何西阿書",14,"OT"],[29,"Joel","約珥書",3,"OT"],[30,"Amos","阿摩司書",9,"OT"],
+[31,"Obadiah","俄巴底亞書",1,"OT"],[32,"Jonah","約拿書",4,"OT"],[33,"Micah","彌迦書",7,"OT"],[34,"Nahum","那鴻書",3,"OT"],[35,"Habakkuk","哈巴谷書",3,"OT"],
+[36,"Zephaniah","西番雅書",3,"OT"],[37,"Haggai","哈該書",2,"OT"],[38,"Zechariah","撒迦利亞書",14,"OT"],[39,"Malachi","瑪拉基書",4,"OT"],
+[40,"Matthew","馬太福音",28,"NT"],[41,"Mark","馬可福音",16,"NT"],[42,"Luke","路加福音",24,"NT"],[43,"John","約翰福音",21,"NT"],[44,"Acts","使徒行傳",28,"NT"],
+[45,"Romans","羅馬書",16,"NT"],[46,"1 Corinthians","哥林多前書",16,"NT"],[47,"2 Corinthians","哥林多後書",13,"NT"],[48,"Galatians","加拉太書",6,"NT"],[49,"Ephesians","以弗所書",6,"NT"],
+[50,"Philippians","腓立比書",4,"NT"],[51,"Colossians","歌羅西書",4,"NT"],[52,"1 Thessalonians","帖撒羅尼迦前書",5,"NT"],[53,"2 Thessalonians","帖撒羅尼迦後書",3,"NT"],[54,"1 Timothy","提摩太前書",6,"NT"],
+[55,"2 Timothy","提摩太後書",4,"NT"],[56,"Titus","提多書",3,"NT"],[57,"Philemon","腓利門書",1,"NT"],[58,"Hebrews","希伯來書",13,"NT"],[59,"James","雅各書",5,"NT"],
+[60,"1 Peter","彼得前書",5,"NT"],[61,"2 Peter","彼得後書",3,"NT"],[62,"1 John","約翰一書",5,"NT"],[63,"2 John","約翰二書",1,"NT"],[64,"3 John","約翰三書",1,"NT"],[65,"Jude","猶大書",1,"NT"],[66,"Revelation","啟示錄",22,"NT"]];
+
+const bookSelect=document.getElementById("bookSelect"),chapterSelect=document.getElementById("chapterSelect");
+bookSelect.innerHTML="";
+books.forEach(b=>bookSelect.add(new Option(`${b[2]} · ${b[1]}`,b[0])));
+bookSelect.value="43";
+let currentBook=43,currentChapter=3,pinyin=false,scale=1,mode="mode-zh",verses=[];
+
+function fillChapters(){
+ const b=books.find(x=>x[0]===Number(bookSelect.value));
+ chapterSelect.innerHTML="";
+ for(let i=1;i<=b[3];i++)chapterSelect.add(new Option(i,i));
+ chapterSelect.value=String(Math.min(currentChapter,b[3]));
+}
+fillChapters();
+
+async function loadChapter(){
+ currentBook=Number(bookSelect.value);currentChapter=Number(chapterSelect.value);
+ const reader=document.getElementById("reader");
+ reader.innerHTML='<div style="padding:45px;color:#777;text-align:center">正在載入 Scripture…</div>';
+ try{
+  const r=await fetch(`https://api.getbible.net/v2/cut/${currentBook}/${currentChapter}.json`);
+  if(!r.ok)throw new Error(`HTTP ${r.status}`);
+  const data=await r.json();
+  verses=(data.verses||[]).map(v=>({n:v.verse,zh:v.text,en:"English translation coming next.",py:""}));
+  render();
+ }catch(e){
+  reader.innerHTML='<div style="padding:45px;color:#8a4c40;text-align:center">抱歉，這一章暫時無法載入。<br>Please refresh or try another chapter.</div>';
+  console.error(e);
+ }
+}
 
 function setMode(nextMode){
  mode=nextMode;
- document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>{
-   b.classList.toggle("active", b.dataset.mode===mode);
- });
- const r=document.getElementById("reader");
- r.className="reader "+mode;
+ document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+ document.getElementById("reader").className="reader "+mode;
  render();
 }
-
-function setPinyin(nextValue){
- pinyin=nextValue;
- document.querySelectorAll("#pinyinSwitch,#mobilePinyinSwitch").forEach(s=>s.classList.toggle("on",pinyin));
+function setPinyin(v){
+ pinyin=v;
+ document.querySelectorAll("#pinyinSwitch,#mobilePinyinSwitch").forEach(s=>s&&s.classList.toggle("on",pinyin));
  render();
 }
-
-document.querySelector(".mobile").onclick=()=>document.body.classList.add("menu-open");
-document.getElementById("mobileOverlay").onclick=()=>document.body.classList.remove("menu-open");
-
 function render(){
- const p=passages[current];
- document.getElementById("title").textContent=p.title;
- document.getElementById("subtitle").textContent=p.subtitle;
- document.getElementById("testament").textContent=p.testament;
- document.getElementById("verses").innerHTML=p.data.map(v=>{
-   const zh=`<div class="translation zh-block"><div class="text zh">${v.zh}</div>${pinyin?`<div class="pinyin">${v.py}</div>`:""}</div>`;
-   const en=`<div class="translation en-block"><div class="text en">${v.en}</div></div>`;
-   let content = mode==="mode-en" ? en+zh : zh+en;
-   if(mode==="mode-side") content = en+zh;
-   return `<section class="verse"><div class="num">${v.n}</div><div class="content">${content}</div></section><div class="divider"></div>`;
- }).join("");
+ const b=books.find(x=>x[0]===currentBook);
+ document.getElementById("passageTitle").textContent=`${b[2]} ${currentChapter}`;
+ document.getElementById("passageSub").textContent=`${b[1]} ${currentChapter} · 和合本（繁體字）`;
+ const reader=document.getElementById("reader");
+ reader.className="reader "+mode;
+ reader.innerHTML=verses.map(v=>`<div class="verse">
+   <div class="vnum">${v.n}</div>
+   <div class="vcontent">
+     <div class="zh"><div class="zhtext">${escapeHtml(v.zh)}</div>${pinyin?'<div class="pinyin">Pinyin data layer coming next.</div>':''}</div>
+     <div class="en"><div class="entext">${v.en}</div></div>
+   </div>
+ </div>`).join("")+`<p style="margin:24px 0 0 42px;color:#777;font-size:11px;line-height:1.5">Chinese Scripture: Union Traditional / 和合本（繁體字）, retrieved live from GetBible. English is intentionally not fetched yet so your private ESV token is never exposed in this public HTML file.</p>`;
+ reader.style.fontSize=`${scale}em`;
 }
-document.getElementById("bookSelect").onchange=e=>{current=e.target.value;render()};
+function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+bookSelect.onchange=()=>{currentChapter=1;fillChapters();chapterSelect.value="1";loadChapter()};
+chapterSelect.onchange=loadChapter;
 document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 function togglePinyin(){setPinyin(!pinyin)}
-document.getElementById("pinyinSwitch").onclick=togglePinyin;document.getElementById("mobilePinyinSwitch").onclick=togglePinyin;document.getElementById("pinyinBtn").onclick=togglePinyin;
-document.getElementById("fontBtn").onclick=()=>{scale=scale>=1.2?.9:scale+.1;document.documentElement.style.setProperty("--scale",scale.toFixed(2))}
-render();
+document.getElementById("pinyinSwitch").onclick=togglePinyin;
+if(document.getElementById("mobilePinyinSwitch"))document.getElementById("mobilePinyinSwitch").onclick=togglePinyin;
+document.getElementById("pinyinBtn").onclick=togglePinyin;
+document.querySelector(".mobile").onclick=()=>document.body.classList.add("menu-open");
+document.getElementById("mobileOverlay").onclick=()=>document.body.classList.remove("menu-open");
+document.getElementById("fontDown").onclick=()=>{scale=Math.max(.82,scale-.08);render()};
+document.getElementById("fontUp").onclick=()=>{scale=Math.min(1.35,scale+.08);render()};
+loadChapter();
 </script>
 </body>
 </html>
