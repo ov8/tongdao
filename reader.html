@@ -26,21 +26,15 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 .testament{margin:18px 0 12px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .translation-note{font-size:12px;color:var(--muted);margin:0 0 14px}
 .verse{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #EEE8DF}.num{color:var(--gold);font-family:Georgia,serif;padding-top:4px}
-.content{display:flex;flex-direction:column;gap:5px}.zh{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;font-size:calc(1.25rem * var(--readerScale,1));line-height:1.62;margin:0}.en{font-family:Georgia,"Times New Roman",serif;font-size:calc(1.08rem * var(--readerScale,1));line-height:1.62;color:#3E403C;margin:0}.py{font-size:calc(.84rem * var(--readerScale,1));line-height:1.55;color:#4C7566;margin:0}
+.content{display:flex;flex-direction:column;gap:5px}.zh{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;font-size:clamp(1.18rem,1.4vw,1.34rem);line-height:1.62;margin:0}.en{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.02rem,1.15vw,1.15rem);line-height:1.62;color:#3E403C;margin:0}.py{font-size:.84rem;line-height:1.55;color:#4C7566;margin:0}
 .side .content{display:grid;grid-template-columns:1fr 1fr;gap:36px}.loading,.error{padding:70px 10px;text-align:center;color:var(--muted);line-height:1.6}.error{color:#8A4C40}.retry{margin-top:12px;border:1px solid var(--line);background:#fff;padding:9px 13px;border-radius:9px;cursor:pointer}
-.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.verse-rail{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:4px}.verse-tools{display:flex;gap:6px;margin:0}.verse-tool{border:1px solid var(--line);background:#fff;color:var(--gold);width:28px;height:28px;border-radius:999px;cursor:pointer;padding:0;font-size:15px;line-height:1}.verse-tool.saved{background:var(--cream);color:var(--forest)}.searchbar{display:none;gap:8px;align-items:center;padding:12px 0 18px}.searchbar.open{display:flex}.searchbar input{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font-size:15px}.searchbar button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}.search-hit{background:#fff3cf;border-radius:8px}.search-results{display:grid;gap:10px}.search-result{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;cursor:pointer}.search-result:hover{border-color:var(--gold)}.search-result strong{display:block;color:var(--forest);margin-bottom:6px}.search-result .result-text{margin:0;color:#444;line-height:1.5}.search-result .result-translation{font-size:11px;color:var(--muted);margin-top:6px}.search-status{color:var(--muted);padding:18px 0}.search-heading{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:16px}.search-heading h2{font-family:Georgia,"Noto Serif TC",serif;margin:0;font-size:28px}.search-heading span{color:var(--muted);font-size:13px}.panel-title{font-family:Georgia,"Noto Serif TC",serif;font-size:28px;margin:0 0 18px}.bookmark-list{display:grid;gap:10px}.bookmark-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px;cursor:pointer}.bookmark-card strong{display:block;margin-bottom:6px;color:var(--forest)}.bookmark-card p{margin:0;color:var(--muted);line-height:1.45}.empty{color:var(--muted);padding:28px 0}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}.content.side-by-side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(24px,2.5vw,44px);align-items:start}.content.side-by-side .zhcol,.content.side-by-side .encol{min-width:0}.content.side-by-side .zhcol{display:flex;flex-direction:column;gap:6px}@media(max-width:760px){.content.side-by-side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:16px;row-gap:0}.content.side-by-side .zh{font-size:.92rem;line-height:1.48}.content.side-by-side .py{font-size:.68rem;line-height:1.38}.content.side-by-side .en{font-size:.82rem;line-height:1.48}}
+.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.verse-tools{display:flex;gap:6px;margin-top:8px}.verse-tool{border:1px solid var(--line);background:#fff;color:var(--gold);width:30px;height:30px;border-radius:999px;cursor:pointer;padding:0}.verse-tool.saved{background:var(--cream);color:var(--forest)}.searchbar{display:none;gap:8px;align-items:center;padding:12px 0 18px}.searchbar.open{display:flex}.searchbar input{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font-size:15px}.searchbar button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}.search-hit{background:#fff3cf;border-radius:8px}.panel-title{font-family:Georgia,"Noto Serif TC",serif;font-size:28px;margin:0 0 18px}.bookmark-list{display:grid;gap:10px}.bookmark-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px;cursor:pointer}.bookmark-card strong{display:block;margin-bottom:6px;color:var(--forest)}.bookmark-card p{margin:0;color:var(--muted);line-height:1.45}.empty{color:var(--muted);padding:28px 0}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}.content.side-by-side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:44px;align-items:start}.content.side-by-side .zhcol,.content.side-by-side .encol{min-width:0}.content.side-by-side .zhcol{display:flex;flex-direction:column;gap:6px}@media(max-width:760px){.content.side-by-side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:16px;row-gap:0}.content.side-by-side .zh{font-size:.92rem;line-height:1.48}.content.side-by-side .py{font-size:.68rem;line-height:1.38}.content.side-by-side .en{font-size:.82rem;line-height:1.48}}
 .scrim{display:none}
 @media(max-width:800px){
   .app{display:block}aside{position:fixed;left:0;top:0;bottom:0;width:min(84vw,300px);height:100vh;z-index:21;transform:translateX(-100%);transition:.18s;background:#F8F4ED}.app.open aside{transform:translateX(0)}
   .scrim{position:fixed;inset:0;background:rgba(15,31,26,.25);z-index:20}.app.open .scrim{display:block}
   .menu{display:block}.topbar{height:60px;padding:0 12px;overflow:auto}.book{min-width:180px}.reader{padding:24px 17px 72px}.heading h1{font-size:24px}.verse{grid-template-columns:27px 1fr;gap:8px;padding:8px 0}.zh{font-size:20px;line-height:1.4}.en{font-size:17px;line-height:1.42}.side .content{display:flex;flex-direction:column;gap:5px}.footer-note{margin-left:35px}
 }
-
-@media(min-width:1100px){
-  .reader.side{width:min(calc(100% - 44px),1420px);}
-  .reader:not(.side){width:min(calc(100% - 90px),1040px);}
-}
-
 </style>
 </head>
 <body>
@@ -75,7 +69,7 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
   <div class="spacer"></div><div class="reader-tools" aria-label="Reading controls"><button class="toolbtn" id="fontDown" aria-label="Decrease text size">A−</button><button class="toolbtn" id="fontUp" aria-label="Increase text size">A+</button></div>
 </header>
 
-<section class="reader"><div class="searchbar" id="searchbar"><input id="searchInput" type="search" placeholder="Search the whole Bible / 搜尋整本聖經"><button id="searchGo">Search</button><button id="searchClose" aria-label="Close search">×</button></div><div id="reader"></div></section>
+<section class="reader"><div class="searchbar" id="searchbar"><input id="searchInput" type="search" placeholder="Search this chapter / 搜尋本章"><button id="searchGo">Search</button><button id="searchClose" aria-label="Close search">×</button></div><div id="reader"></div></section>
 </main>
 </div>
 
@@ -100,7 +94,19 @@ const BOOKS=[
 const bookEl=document.getElementById("book");
 const chapterEl=document.getElementById("chapter");
 const reader=document.getElementById("reader");
-let currentBook=43,currentChapter=3,mode="zh",showPinyin=true,fontScale=1,currentZh=[],currentEn=[];
+const savedState=(()=>{try{return JSON.parse(localStorage.getItem("tongdaoReaderState")||"{}")}catch(e){return{}}})();
+let currentBook=Number(savedState.book)||43,
+    currentChapter=Number(savedState.chapter)||3,
+    mode=savedState.mode||"zh",
+    showPinyin=savedState.pinyin!==undefined?!!savedState.pinyin:true,
+    fontScale=Number(savedState.fontScale)||1,
+    currentZh=[],currentEn=[];
+
+function saveReaderState(){
+  localStorage.setItem("tongdaoReaderState",JSON.stringify({
+    book:currentBook,chapter:currentChapter,mode,pinyin:showPinyin,fontScale
+  }));
+}
 
 function setupBooks(){
   const ot=document.createElement("optgroup");ot.label="舊約 · Old Testament";
@@ -118,6 +124,14 @@ function setupChapters(){
   chapterEl.value=String(Math.min(currentChapter,b.c));
 }
 setupBooks();setupChapters();
+document.querySelectorAll("#modes button").forEach(btn=>btn.classList.toggle("active",btn.dataset.mode===mode));
+const initSwitch=document.getElementById("pinyinSwitch");
+const initKnob=document.getElementById("pinyinKnob");
+if(initSwitch&&initKnob){
+  initSwitch.style.background=showPinyin?"var(--forest)":"#c9c6bf";
+  initKnob.style.transform=showPinyin?"translateX(16px)":"translateX(0)";
+}
+
 
 function findVerseArray(obj){
   if(!obj || typeof obj!=="object") return null;
@@ -207,7 +221,7 @@ function render(zh,en){
       content=mode==="en"?e+chineseBlock:chineseBlock+e;
     }
     const saved=isBookmarked(currentBook,currentChapter,v.n);
-    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}" data-search="${escapeHtml((v.text+" "+(englishByVerse.get(v.n)||"")).toLowerCase())}"><div class="verse-rail"><div class="num" aria-hidden="true">${v.n}</div><div class="verse-tools"><button class="verse-tool ${saved?"saved":""}" data-bookmark="${v.n}" aria-label="${saved?"Remove bookmark":"Bookmark verse"}">${saved?"★":"☆"}</button></div></div><div class="${contentClass}">${content}</div></article>`;
+    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}" data-search="${escapeHtml((v.text+" "+(englishByVerse.get(v.n)||"")).toLowerCase())}"><div class="num" aria-hidden="true">${v.n}</div><div><div class="${contentClass}">${content}</div><div class="verse-tools"><button class="verse-tool ${saved?"saved":""}" data-bookmark="${v.n}" aria-label="${saved?"Remove bookmark":"Bookmark verse"}">${saved?"★":"☆"}</button></div></div></article>`;
   });
   const bIndex=BOOKS.findIndex(x=>x.n===currentBook);
   const prevDisabled=currentChapter===1 && bIndex===0;
@@ -215,7 +229,7 @@ function render(zh,en){
   html+=`<div class="chapter-nav" aria-label="Chapter navigation"><button id="prevChapter" ${prevDisabled?"disabled":""}>← Previous</button><button id="nextChapter" ${nextDisabled?"disabled":""}>Next →</button></div>`;
   html+=`<p class="footer-note">Chinese: Union Traditional / 和合本（繁體字） via GetBible. English: American Standard Version (public domain) via GetBible, used only as a temporary working English source until ESV is connected securely.</p>`;
   reader.innerHTML=html;
-  reader.style.setProperty("--readerScale",fontScale.toFixed(2));
+  reader.style.fontSize=`${fontScale}em`;
   const prev=document.getElementById("prevChapter"), next=document.getElementById("nextChapter");
   if(prev)prev.onclick=()=>moveChapter(-1);
   if(next)next.onclick=()=>moveChapter(1);
@@ -266,79 +280,13 @@ function openSearch(){
   bar.classList.add("open");
   document.getElementById("searchInput").focus();
 }
-function collectSearchHits(data,translation){
-  const hits=[];
-  const seen=new Set();
-  function walk(o,ctx={}){
-    if(o==null)return;
-    if(Array.isArray(o)){o.forEach(x=>walk(x,ctx));return}
-    if(typeof o!=="object")return;
-    const next={
-      book:o.book_name ?? o.book ?? o.name ?? ctx.book,
-      bookNr:Number(o.book_nr ?? o.book_number ?? o.book_num ?? ctx.bookNr || 0),
-      chapter:Number(o.chapter ?? o.chapter_nr ?? ctx.chapter || 0),
-      verse:Number(o.verse ?? o.verse_nr ?? o.verse_number ?? ctx.verse || 0)
-    };
-    const text=String(o.text ?? o.scripture ?? o.verse_text ?? "").trim();
-    if(text && next.chapter && next.verse){
-      const key=`${translation}-${next.bookNr||next.book}-${next.chapter}-${next.verse}-${text}`;
-      if(!seen.has(key)){seen.add(key);hits.push({...next,text,translation})}
-    }
-    Object.values(o).forEach(v=>{if(v&&typeof v==="object")walk(v,next)});
-  }
-  walk(data);
-  return hits;
-}
-function resolveBookNumber(hit){
-  if(hit.bookNr>=1&&hit.bookNr<=66)return hit.bookNr;
-  const name=String(hit.book||"").toLowerCase().replace(/\s+/g," ").trim();
-  const found=BOOKS.find(b=>b.en.toLowerCase()===name||b.zh===hit.book);
-  return found?.n||0;
-}
-async function searchTranslation(translation,q){
-  const url=`https://search.getbible.net/v2/${translation}?q=${encodeURIComponent(q)}&scope=bible&limit=50`;
-  const r=await fetch(url,{cache:"no-store"});
-  if(!r.ok)throw new Error(`Search ${translation}: ${r.status}`);
-  return collectSearchHits(await r.json(),translation);
-}
-async function runSearch(){
-  const raw=document.getElementById("searchInput").value.trim();
-  if(!raw)return;
-  const r=document.getElementById("reader");
-  r.className="reader-view";
-  r.innerHTML='<div class="search-status">Searching the whole Bible… / 正在搜尋整本聖經…</div>';
-  try{
-    const [zh,en]=await Promise.allSettled([
-      searchTranslation("cut",raw),
-      searchTranslation("asv",raw)
-    ]);
-    const hits=[
-      ...(zh.status==="fulfilled"?zh.value:[]),
-      ...(en.status==="fulfilled"?en.value:[])
-    ];
-    if(!hits.length){
-      r.innerHTML=`<div class="search-heading"><h2>搜尋 Search</h2><span>Whole Bible · 整本聖經</span></div><div class="empty">No results for “${escapeHtml(raw)}”.</div>`;
-      return;
-    }
-    hits.sort((a,b)=>(resolveBookNumber(a)-resolveBookNumber(b))||(a.chapter-b.chapter)||(a.verse-b.verse));
-    r.innerHTML=`<div class="search-heading"><h2>搜尋 Search</h2><span>${hits.length} results · Whole Bible</span></div><div class="search-results">`+
-      hits.map((x,i)=>{
-        const bn=resolveBookNumber(x);
-        const b=BOOKS.find(z=>z.n===bn);
-        const label=b?`${b.zh} ${x.chapter}:${x.verse} · ${b.en}`:`${x.book||"Bible"} ${x.chapter}:${x.verse}`;
-        return `<article class="search-result" data-result="${i}"><strong>${label}</strong><p class="result-text">${escapeHtml(x.text)}</p><div class="result-translation">${x.translation==="cut"?"和合本（繁體字）":"ASV"}</div></article>`;
-      }).join("")+'</div>';
-    r.querySelectorAll("[data-result]").forEach(card=>card.onclick=async()=>{
-      const hit=hits[Number(card.dataset.result)], bn=resolveBookNumber(hit);
-      if(!bn)return;
-      currentBook=bn;currentChapter=hit.chapter;bookEl.value=String(bn);setupChapters();chapterEl.value=String(hit.chapter);
-      await load();
-      setTimeout(()=>document.getElementById("v"+hit.verse)?.scrollIntoView({behavior:"smooth",block:"center"}),160);
-    });
-  }catch(err){
-    console.error(err);
-    r.innerHTML='<div class="error">Search is temporarily unavailable.<br>搜尋暫時無法使用。</div>';
-  }
+function runSearch(){
+  const q=document.getElementById("searchInput").value.trim().toLowerCase();
+  document.querySelectorAll(".verse").forEach(v=>v.classList.remove("search-hit"));
+  if(!q)return;
+  const hit=[...document.querySelectorAll(".verse")].find(v=>(v.dataset.search||"").includes(q));
+  if(hit){hit.classList.add("search-hit");hit.scrollIntoView({behavior:"smooth",block:"center"})}
+  else alert("No match in this chapter / 本章找不到");
 }
 
 function moveChapter(delta){
@@ -350,14 +298,14 @@ function moveChapter(delta){
     if(currentChapter<b.c) currentChapter++;
     else if(bIndex<BOOKS.length-1){currentBook=BOOKS[bIndex+1].n;currentChapter=1;}
   }
-  bookEl.value=String(currentBook);setupChapters();chapterEl.value=String(currentChapter);load();window.scrollTo({top:0,behavior:"smooth"});
+  bookEl.value=String(currentBook);setupChapters();chapterEl.value=String(currentChapter);saveReaderState();load();window.scrollTo({top:0,behavior:"smooth"});
 }
 function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
 
-bookEl.onchange=()=>{currentBook=Number(bookEl.value);currentChapter=1;setupChapters();chapterEl.value="1";load()};
-chapterEl.onchange=()=>{currentChapter=Number(chapterEl.value);load()};
+bookEl.onchange=()=>{currentBook=Number(bookEl.value);currentChapter=1;setupChapters();chapterEl.value="1";saveReaderState();load()};
+chapterEl.onchange=()=>{currentChapter=Number(chapterEl.value);saveReaderState();load()};
 document.querySelectorAll("#modes button").forEach(btn=>btn.onclick=()=>{
-  mode=btn.dataset.mode;
+  mode=btn.dataset.mode;saveReaderState();
   document.querySelectorAll("#modes button").forEach(x=>x.classList.toggle("active",x===btn));
   load();
 });
@@ -375,10 +323,10 @@ document.getElementById("searchGo").onclick=runSearch;
 document.getElementById("searchClose").onclick=()=>document.getElementById("searchbar").classList.remove("open");
 document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch()});
 
-document.getElementById("fontDown").onclick=()=>{fontScale=Math.max(.75,fontScale-.1);document.getElementById("reader").style.setProperty("--readerScale",fontScale.toFixed(2));};
-document.getElementById("fontUp").onclick=()=>{fontScale=Math.min(1.6,fontScale+.1);document.getElementById("reader").style.setProperty("--readerScale",fontScale.toFixed(2));};
+document.getElementById("fontDown").onclick=()=>{fontScale=Math.max(.85,fontScale-.1);load()};
+document.getElementById("fontUp").onclick=()=>{fontScale=Math.min(1.5,fontScale+.1);load()};
 document.getElementById("pinyinSwitch").onclick=()=>{
-  showPinyin=!showPinyin;
+  showPinyin=!showPinyin;saveReaderState();
   const sw=document.getElementById("pinyinSwitch"), knob=document.getElementById("pinyinKnob");
   sw.style.background=showPinyin?"var(--forest)":"#c9c6bf";
   knob.style.transform=showPinyin?"translateX(16px)":"translateX(0)";
@@ -404,13 +352,13 @@ load();
   .reader.side .verse .content > *,
   .reader .content.side-by-side > *{min-width:0!important}
   .reader.side .zh,.reader .content.side-by-side .zh{
-    font-size:calc(15px * var(--readerScale,1))!important;line-height:1.48!important
+    font-size:15px!important;line-height:1.48!important
   }
   .reader.side .py,.reader .content.side-by-side .py{
-    font-size:calc(10.5px * var(--readerScale,1))!important;line-height:1.35!important
+    font-size:10.5px!important;line-height:1.35!important
   }
   .reader.side .en,.reader .content.side-by-side .en{
-    font-size:calc(14px * var(--readerScale,1))!important;line-height:1.5!important
+    font-size:14px!important;line-height:1.5!important
   }
 
   /* Persistent mobile app nav */
@@ -432,7 +380,7 @@ load();
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   }
   .mobile-bottom-nav .ico{font-size:20px;color:var(--forest)}
-  .reader{width:auto!important;padding-bottom:110px!important}
+  .reader{padding-bottom:110px!important}
 }
 </style>
 
@@ -459,3 +407,19 @@ load();
   if(mt) mt.onclick=()=>safeClick("settingsBtn");
 })();
 </script>
+
+<style>
+/* v0.6 safe layout refinement */
+@media(min-width:1100px){
+  .reader:not(.side){width:min(calc(100% - 120px),1040px)!important;max-width:none!important;}
+  .reader.side{width:min(calc(100% - 70px),1360px)!important;max-width:none!important;}
+  .reader.side .content.side-by-side{
+    column-gap:clamp(28px,2.4vw,46px)!important;
+  }
+}
+</style>
+
+<style>
+.nav button{pointer-events:auto!important;cursor:pointer!important}
+.brand{pointer-events:auto!important}
+</style>
