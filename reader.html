@@ -281,44 +281,52 @@ function openSearch(){
   bar.classList.add("open");
   document.getElementById("searchInput").focus();
 }
-const translationSearchCache={};
-async function getTranslationForSearch(code){
-  if(translationSearchCache[code])return translationSearchCache[code];
-  translationSearchCache[code]=await fetchJSON(`https://api.getbible.net/v2/${code}.json`);
-  return translationSearchCache[code];
-}
-function scanTranslation(data,q,translation){
+function extractSearchHits(payload,translation){
   const hits=[];
-  const needle=q.toLocaleLowerCase();
-  const seen=new Set();
-
-  function walk(o,ctx={book:0,chapter:0}){
-    if(o==null)return;
-    if(Array.isArray(o)){o.forEach(x=>walk(x,ctx));return}
-    if(typeof o!=="object")return;
-
-    const book=Number(o.book_nr ?? o.book_number ?? o.book ?? ctx.book ?? 0);
-    const chapter=Number(o.chapter ?? o.chapter_nr ?? o.chapter_number ?? ctx.chapter ?? 0);
-
-    if(Array.isArray(o.verses)){
-      o.verses.forEach((v,i)=>{
-        const verse=Number(v.verse ?? v.verse_nr ?? v.number ?? i+1);
-        const text=String(v.text ?? v.scripture ?? v.value ?? "").trim();
-        if(text && text.toLocaleLowerCase().includes(needle)){
-          const key=`${translation}-${book}-${chapter}-${verse}-${text}`;
-          if(!seen.has(key)){seen.add(key);hits.push({book,chapter,verse,text,translation});}
-        }
-      });
-    }
-
-    for(const [k,v] of Object.entries(o)){
-      if(k==="verses")continue;
-      if(v&&typeof v==="object")walk(v,{book:book||ctx.book,chapter:chapter||ctx.chapter});
-    }
-  }
-  walk(data);
+  const results=payload?.results||{};
+  Object.values(results).forEach(chapterObj=>{
+    if(!chapterObj || typeof chapterObj!=="object")return;
+    const book=Number(chapterObj.book_nr ?? chapterObj.book_number ?? chapterObj.book ?? 0);
+    const chapter=Number(chapterObj.chapter ?? chapterObj.chapter_nr ?? chapterObj.chapter_number ?? 0);
+    const verses=Array.isArray(chapterObj.verses) ? chapterObj.verses : [];
+    verses.forEach((v,i)=>{
+      const verse=Number(v.verse ?? v.verse_nr ?? v.number ?? i+1);
+      const text=String(v.text ?? v.scripture ?? v.value ?? "").trim();
+      if(book&&chapter&&verse&&text)hits.push({book,chapter,verse,text,translation});
+    });
+  });
   return hits;
 }
+
+async function searchTranslation(code,q){
+  const all=[];
+  let offset=0;
+  const limit=1000;
+  let total=0;
+
+  do{
+    const params=new URLSearchParams({
+      q,
+      scope:"bible",
+      sort:"canonical",
+      limit:String(limit),
+      offset:String(offset)
+    });
+    const payload=await fetchJSON(`https://search.getbible.net/v2/${code}?${params.toString()}`);
+    const page=extractSearchHits(payload,code);
+    all.push(...page);
+
+    total=Number(payload?.query?.total ?? page.length);
+    const returned=Number(payload?.query?.returned ?? page.length);
+    const hasMore=Boolean(payload?.query?.has_more);
+
+    if(!hasMore || returned===0)break;
+    offset+=returned;
+  }while(offset<total);
+
+  return all;
+}
+
 async function runSearch(){
   const raw=document.getElementById("searchInput").value.trim();
   if(!raw)return;
@@ -327,15 +335,24 @@ async function runSearch(){
   reader.innerHTML='<div class="search-status">Searching the whole Bible… / 正在搜尋整本聖經…</div>';
 
   try{
-    const [cutData,asvData]=await Promise.all([
-      getTranslationForSearch("cut"),
-      getTranslationForSearch("asv")
+    const settled=await Promise.allSettled([
+      searchTranslation("cut",raw),
+      searchTranslation("asv",raw)
     ]);
 
-    const hits=[
-      ...scanTranslation(cutData,raw,"cut"),
-      ...scanTranslation(asvData,raw,"asv")
-    ].filter(x=>x.book>=1&&x.book<=66&&x.chapter>=1&&x.verse>=1);
+    let hits=[];
+    settled.forEach(result=>{
+      if(result.status==="fulfilled")hits.push(...result.value);
+      else console.warn("One translation search failed:",result.reason);
+    });
+
+    const seen=new Set();
+    hits=hits.filter(x=>{
+      const key=`${x.translation}-${x.book}-${x.chapter}-${x.verse}`;
+      if(seen.has(key))return false;
+      seen.add(key);
+      return x.book>=1&&x.book<=66&&x.chapter>=1&&x.verse>=1;
+    });
 
     hits.sort((a,b)=>(a.book-b.book)||(a.chapter-b.chapter)||(a.verse-b.verse)||(a.translation.localeCompare(b.translation)));
 
@@ -348,7 +365,7 @@ async function runSearch(){
       hits.map((x,i)=>{
         const b=BOOKS.find(z=>z.n===x.book);
         return `<article class="search-result" data-result="${i}">
-          <strong>${b?`${b.zh} ${x.chapter}:${x.verse} · ${b.en}`:`Book ${x.book} ${x.chapter}:${x.verse}`}</strong>
+          <strong>${b?`${b.zh} ${x.chapter}:${x.verse} · ${b.en} ${x.chapter}:${x.verse}`:`Book ${x.book} ${x.chapter}:${x.verse}`}</strong>
           <p>${escapeHtml(x.text)}</p>
           <small>${x.translation==="cut"?"和合本（繁體字）":"ASV"}</small>
         </article>`;
@@ -356,8 +373,11 @@ async function runSearch(){
 
     reader.querySelectorAll("[data-result]").forEach(card=>card.onclick=async()=>{
       const hit=hits[Number(card.dataset.result)];
-      currentBook=hit.book;currentChapter=hit.chapter;
-      bookEl.value=String(currentBook);setupChapters();chapterEl.value=String(currentChapter);
+      currentBook=hit.book;
+      currentChapter=hit.chapter;
+      bookEl.value=String(currentBook);
+      setupChapters();
+      chapterEl.value=String(currentChapter);
       saveReaderState();
       await load();
       setTimeout(()=>document.getElementById("v"+hit.verse)?.scrollIntoView({behavior:"smooth",block:"center"}),160);
@@ -490,8 +510,8 @@ load();
 <style>
 /* v0.6 safe layout refinement */
 @media(min-width:1100px){
-  .reader:not(.side){width:min(calc(100% - 120px),1040px)!important;max-width:none!important;}
-  .reader.side{width:min(calc(100% - 70px),1360px)!important;max-width:none!important;}
+  .reader:not(.side){width:min(calc(100% - 96px),1160px)!important;max-width:none!important;}
+  .reader.side{width:min(calc(100% - 72px),1440px)!important;max-width:none!important;}
   .reader.side .content.side-by-side{
     column-gap:clamp(28px,2.4vw,46px)!important;
   }
