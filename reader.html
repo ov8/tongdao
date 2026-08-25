@@ -26,9 +26,9 @@ main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display
 .testament{margin:18px 0 12px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .translation-note{font-size:12px;color:var(--muted);margin:0 0 14px}
 .verse{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #EEE8DF}.num{color:var(--gold);font-family:Georgia,serif;padding-top:4px}
-.content{display:flex;flex-direction:column;gap:5px}.zh{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;font-size:clamp(1.18rem,1.4vw,1.34rem);line-height:1.62;margin:0}.en{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.02rem,1.15vw,1.15rem);line-height:1.62;color:#3E403C;margin:0}.py{font-size:.84rem;line-height:1.55;color:#4C7566;margin:0}
+.content{display:flex;flex-direction:column;gap:5px}.zh{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;font-size:calc(1.25rem * var(--readerScale,1));line-height:1.62;margin:0}.en{font-family:Georgia,"Times New Roman",serif;font-size:calc(1.08rem * var(--readerScale,1));line-height:1.62;color:#3E403C;margin:0}.py{font-size:calc(.84rem * var(--readerScale,1));line-height:1.55;color:#4C7566;margin:0}
 .side .content{display:grid;grid-template-columns:1fr 1fr;gap:36px}.loading,.error{padding:70px 10px;text-align:center;color:var(--muted);line-height:1.6}.error{color:#8A4C40}.retry{margin-top:12px;border:1px solid var(--line);background:#fff;padding:9px 13px;border-radius:9px;cursor:pointer}
-.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.verse-tools{display:flex;gap:6px;margin-top:8px}.verse-tool{border:1px solid var(--line);background:#fff;color:var(--gold);width:30px;height:30px;border-radius:999px;cursor:pointer;padding:0}.verse-tool.saved{background:var(--cream);color:var(--forest)}.searchbar{display:none;gap:8px;align-items:center;padding:12px 0 18px}.searchbar.open{display:flex}.searchbar input{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font-size:15px}.searchbar button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}.search-hit{background:#fff3cf;border-radius:8px}.panel-title{font-family:Georgia,"Noto Serif TC",serif;font-size:28px;margin:0 0 18px}.bookmark-list{display:grid;gap:10px}.bookmark-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px;cursor:pointer}.bookmark-card strong{display:block;margin-bottom:6px;color:var(--forest)}.bookmark-card p{margin:0;color:var(--muted);line-height:1.45}.empty{color:var(--muted);padding:28px 0}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}.content.side-by-side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:44px;align-items:start}.content.side-by-side .zhcol,.content.side-by-side .encol{min-width:0}.content.side-by-side .zhcol{display:flex;flex-direction:column;gap:6px}@media(max-width:760px){.content.side-by-side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:16px;row-gap:0}.content.side-by-side .zh{font-size:.92rem;line-height:1.48}.content.side-by-side .py{font-size:.68rem;line-height:1.38}.content.side-by-side .en{font-size:.82rem;line-height:1.48}}
+.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.verse-rail{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:4px}.verse-tools{display:flex;gap:6px;margin:0}.verse-tool{border:1px solid var(--line);background:#fff;color:var(--gold);width:28px;height:28px;border-radius:999px;cursor:pointer;padding:0;font-size:15px;line-height:1}.verse-tool.saved{background:var(--cream);color:var(--forest)}.searchbar{display:none;gap:8px;align-items:center;padding:12px 0 18px}.searchbar.open{display:flex}.searchbar input{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 13px;font-size:15px}.searchbar button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}.search-hit{background:#fff3cf;border-radius:8px}.panel-title{font-family:Georgia,"Noto Serif TC",serif;font-size:28px;margin:0 0 18px}.bookmark-list{display:grid;gap:10px}.bookmark-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px;cursor:pointer}.bookmark-card strong{display:block;margin-bottom:6px;color:var(--forest)}.bookmark-card p{margin:0;color:var(--muted);line-height:1.45}.empty{color:var(--muted);padding:28px 0}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}.content.side-by-side{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:44px;align-items:start}.content.side-by-side .zhcol,.content.side-by-side .encol{min-width:0}.content.side-by-side .zhcol{display:flex;flex-direction:column;gap:6px}@media(max-width:760px){.content.side-by-side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:16px;row-gap:0}.content.side-by-side .zh{font-size:.92rem;line-height:1.48}.content.side-by-side .py{font-size:.68rem;line-height:1.38}.content.side-by-side .en{font-size:.82rem;line-height:1.48}}
 .scrim{display:none}
 @media(max-width:800px){
   .app{display:block}aside{position:fixed;left:0;top:0;bottom:0;width:min(84vw,300px);height:100vh;z-index:21;transform:translateX(-100%);transition:.18s;background:#F8F4ED}.app.open aside{transform:translateX(0)}
@@ -201,7 +201,7 @@ function render(zh,en){
       content=mode==="en"?e+chineseBlock:chineseBlock+e;
     }
     const saved=isBookmarked(currentBook,currentChapter,v.n);
-    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}" data-search="${escapeHtml((v.text+" "+(englishByVerse.get(v.n)||"")).toLowerCase())}"><div class="num" aria-hidden="true">${v.n}</div><div><div class="${contentClass}">${content}</div><div class="verse-tools"><button class="verse-tool ${saved?"saved":""}" data-bookmark="${v.n}" aria-label="${saved?"Remove bookmark":"Bookmark verse"}">${saved?"★":"☆"}</button></div></div></article>`;
+    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}" data-search="${escapeHtml((v.text+" "+(englishByVerse.get(v.n)||"")).toLowerCase())}"><div class="verse-rail"><div class="num" aria-hidden="true">${v.n}</div><div class="verse-tools"><button class="verse-tool ${saved?"saved":""}" data-bookmark="${v.n}" aria-label="${saved?"Remove bookmark":"Bookmark verse"}">${saved?"★":"☆"}</button></div></div><div class="${contentClass}">${content}</div></article>`;
   });
   const bIndex=BOOKS.findIndex(x=>x.n===currentBook);
   const prevDisabled=currentChapter===1 && bIndex===0;
@@ -209,7 +209,7 @@ function render(zh,en){
   html+=`<div class="chapter-nav" aria-label="Chapter navigation"><button id="prevChapter" ${prevDisabled?"disabled":""}>← Previous</button><button id="nextChapter" ${nextDisabled?"disabled":""}>Next →</button></div>`;
   html+=`<p class="footer-note">Chinese: Union Traditional / 和合本（繁體字） via GetBible. English: American Standard Version (public domain) via GetBible, used only as a temporary working English source until ESV is connected securely.</p>`;
   reader.innerHTML=html;
-  reader.style.fontSize=`${fontScale}em`;
+  reader.style.setProperty("--readerScale",fontScale.toFixed(2));
   const prev=document.getElementById("prevChapter"), next=document.getElementById("nextChapter");
   if(prev)prev.onclick=()=>moveChapter(-1);
   if(next)next.onclick=()=>moveChapter(1);
@@ -303,8 +303,8 @@ document.getElementById("searchGo").onclick=runSearch;
 document.getElementById("searchClose").onclick=()=>document.getElementById("searchbar").classList.remove("open");
 document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch()});
 
-document.getElementById("fontDown").onclick=()=>{fontScale=Math.max(.85,fontScale-.1);load()};
-document.getElementById("fontUp").onclick=()=>{fontScale=Math.min(1.5,fontScale+.1);load()};
+document.getElementById("fontDown").onclick=()=>{fontScale=Math.max(.75,fontScale-.1);document.getElementById("reader").style.setProperty("--readerScale",fontScale.toFixed(2));};
+document.getElementById("fontUp").onclick=()=>{fontScale=Math.min(1.6,fontScale+.1);document.getElementById("reader").style.setProperty("--readerScale",fontScale.toFixed(2));};
 document.getElementById("pinyinSwitch").onclick=()=>{
   showPinyin=!showPinyin;
   const sw=document.getElementById("pinyinSwitch"), knob=document.getElementById("pinyinKnob");
@@ -332,13 +332,13 @@ load();
   .reader.side .verse .content > *,
   .reader .content.side-by-side > *{min-width:0!important}
   .reader.side .zh,.reader .content.side-by-side .zh{
-    font-size:15px!important;line-height:1.48!important
+    font-size:calc(15px * var(--readerScale,1))!important;line-height:1.48!important
   }
   .reader.side .py,.reader .content.side-by-side .py{
-    font-size:10.5px!important;line-height:1.35!important
+    font-size:calc(10.5px * var(--readerScale,1))!important;line-height:1.35!important
   }
   .reader.side .en,.reader .content.side-by-side .en{
-    font-size:14px!important;line-height:1.5!important
+    font-size:calc(14px * var(--readerScale,1))!important;line-height:1.5!important
   }
 
   /* Persistent mobile app nav */
