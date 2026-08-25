@@ -258,7 +258,14 @@ function toggleBookmark(verse){
   }
   saveBookmarks(items);render(currentZh,currentEn);
 }
+function setActiveSection(section){
+  const ids={read:'mobileRead',search:'mobileSearch',bookmarks:'mobileBookmarks',settings:'mobileSettings'};
+  Object.entries(ids).forEach(([key,id])=>document.getElementById(id)?.classList.toggle('active',key===section));
+  const desktop={read:'readBtn',search:'searchBtn',bookmarks:'bookmarksBtn',settings:'settingsBtn'};
+  Object.entries(desktop).forEach(([key,id])=>document.getElementById(id)?.classList.toggle('active',key===section));
+}
 function showBookmarks(){
+  setActiveSection("bookmarks");
   const items=getBookmarks();
   const r=document.getElementById("reader");
   document.getElementById("searchbar").classList.remove("open");
@@ -272,11 +279,13 @@ function showBookmarks(){
   });
 }
 function showReader(){
+  setActiveSection("read");
   document.getElementById("searchbar").classList.remove("open");
   if(currentZh.length)render(currentZh,currentEn); else load();
 }
 function openSearch(){
   showReader();
+  setActiveSection("search");
   const bar=document.getElementById("searchbar");
   bar.classList.add("open");
   document.getElementById("searchInput").focus();
@@ -359,40 +368,42 @@ async function buildLocalSearchIndex(){
 async function runSearch(){
   const raw=document.getElementById('searchInput').value.trim();
   if(!raw)return;
-  const q=raw.toLocaleLowerCase();
+  setActiveSection('search');
   reader.className='reader-view';
-  reader.innerHTML='<div class="search-status">Building whole-Bible search… this can take a few seconds the first time.<br>正在建立整本聖經搜尋索引…</div>';
+  reader.innerHTML='<div class="search-status">Searching the whole Bible…<br>正在搜尋整本聖經…</div>';
   try{
-    const index=await buildLocalSearchIndex();
-    const hits=index.filter(x=>x.search.includes(q));
-    hits.sort((a,b)=>(a.book-b.book)||(a.chapter-b.chapter)||(a.verse-b.verse)||(a.translation.localeCompare(b.translation)));
-
+    const url=t=>`https://search.getbible.net/v2/${t}?q=${encodeURIComponent(raw)}&scope=bible&sort=canonical&limit=500`;
+    const settled=await Promise.allSettled([fetchJSON(url('cut')),fetchJSON(url('asv'))]);
+    const rows=[];
+    for(const [i,res] of settled.entries()){
+      if(res.status!=='fulfilled') continue;
+      const translation=i===0?'cut':'asv';
+      const payload=res.value?.results ?? res.value;
+      rows.push(...flattenTranslation(payload,translation));
+    }
+    const dedup=new Map();
+    rows.forEach(x=>dedup.set(`${x.translation}-${x.book}-${x.chapter}-${x.verse}`,x));
+    const hits=[...dedup.values()].sort((a,b)=>(a.book-b.book)||(a.chapter-b.chapter)||(a.verse-b.verse)||(a.translation.localeCompare(b.translation)));
     if(!hits.length){
       reader.innerHTML=`<div class="search-heading"><h2>搜尋 Search</h2><span>Whole Bible · 整本聖經</span></div><div class="empty">No results for “${escapeHtml(raw)}”.</div>`;
       return;
     }
-
     reader.innerHTML=`<div class="search-heading"><h2>搜尋 Search</h2><span>${hits.length} results · Whole Bible</span></div><div class="search-results">`+
-      hits.map((x,i)=>{
-        const b=BOOKS.find(z=>z.n===x.book);
-        return `<article class="search-result" data-result="${i}"><strong>${b?`${b.zh} ${x.chapter}:${x.verse} · ${b.en}`:`Book ${x.book} ${x.chapter}:${x.verse}`}</strong><p>${escapeHtml(x.text)}</p><small>${x.translation==='cut'?'和合本（繁體字）':'ASV'}</small></article>`;
-      }).join('')+'</div>';
-
+      hits.map((x,i)=>{const b=BOOKS.find(z=>z.n===x.book);return `<article class="search-result" data-result="${i}"><strong>${b?`${b.zh} ${x.chapter}:${x.verse} · ${b.en}`:`Book ${x.book} ${x.chapter}:${x.verse}`}</strong><p>${escapeHtml(x.text)}</p><small>${x.translation==='cut'?'和合本（繁體字）':'ASV'}</small></article>`}).join('')+'</div>';
     reader.querySelectorAll('[data-result]').forEach(card=>card.onclick=async()=>{
-      const hit=hits[Number(card.dataset.result)];
-      currentBook=hit.book;currentChapter=hit.chapter;
+      const hit=hits[Number(card.dataset.result)]; currentBook=hit.book;currentChapter=hit.chapter;
       bookEl.value=String(currentBook);setupChapters();chapterEl.value=String(currentChapter);saveReaderState();
-      await load();
+      await load();setActiveSection('read');
       setTimeout(()=>document.getElementById('v'+hit.verse)?.scrollIntoView({behavior:'smooth',block:'center'}),160);
     });
   }catch(err){
     console.error(err);
-    localSearchIndexPromise=null;
     reader.innerHTML='<div class="error">Whole-Bible search could not load. Please try again.<br>整本聖經搜尋目前無法載入。</div>';
   }
 }
 
 function showSettings(){
+  setActiveSection('settings');
   document.getElementById('searchbar').classList.remove('open');
   const bookmarks=getBookmarks();
   reader.className='reader-view settings-view';
@@ -553,3 +564,19 @@ load();
 .nav button{pointer-events:auto!important;cursor:pointer!important}
 .brand{pointer-events:auto!important}
 </style>
+
+<style>
+/* v0.7 stabilisation: active navigation + responsive utility views */
+@media(min-width:801px){
+  .reader-view.settings-view,.reader-view:not(.reader){width:min(calc(100% - 72px),1240px)!important;max-width:none!important;}
+  .settings-view{max-width:none!important;}
+  .settings-view .settings-section{max-width:980px;}
+}
+.mobile-bottom-nav button.active{font-weight:700;color:var(--forest);}
+.mobile-bottom-nav button.active .ico svg{stroke-width:2.35;}
+.mobile-bottom-nav button.active#mobileBookmarks .ico svg{fill:currentColor;}
+.mobile-bottom-nav button.active::before{content:"";position:absolute;top:0;width:34px;height:2px;border-radius:999px;background:var(--forest);}
+.mobile-bottom-nav button{position:relative;}
+.nav button.active{font-weight:700;background:#f2e9dc;}
+</style>
+<script>setActiveSection('read');</script>
