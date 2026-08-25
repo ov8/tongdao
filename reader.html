@@ -181,6 +181,7 @@ async function fetchChapter(translation,book,chapter){
 }
 
 async function load(){
+  setReadingToolsVisible(true);
   currentBook=Number(bookEl.value);currentChapter=Number(chapterEl.value);
   reader.innerHTML='<div class="loading">正在載入經文…<br>Loading Scripture…</div>';
   try{
@@ -264,7 +265,13 @@ function setActiveSection(section){
   const desktop={read:'readBtn',search:'searchBtn',bookmarks:'bookmarksBtn',settings:'settingsBtn'};
   Object.entries(desktop).forEach(([key,id])=>document.getElementById(id)?.classList.toggle('active',key===section));
 }
+function setReadingToolsVisible(visible){
+  const tools=document.querySelector(".reader-tools");
+  if(tools)tools.style.display=visible?"flex":"none";
+}
+
 function showBookmarks(){
+  setReadingToolsVisible(false);
   setActiveSection("bookmarks");
   const items=getBookmarks();
   const r=document.getElementById("reader");
@@ -279,11 +286,13 @@ function showBookmarks(){
   });
 }
 function showReader(){
+  setReadingToolsVisible(true);
   setActiveSection("read");
   document.getElementById("searchbar").classList.remove("open");
   if(currentZh.length)render(currentZh,currentEn); else load();
 }
 function openSearch(){
+  setReadingToolsVisible(false);
   showReader();
   setActiveSection("search");
   const bar=document.getElementById("searchbar");
@@ -403,6 +412,7 @@ async function runSearch(){
 }
 
 function showSettings(){
+  setReadingToolsVisible(false);
   setActiveSection('settings');
   document.getElementById('searchbar').classList.remove('open');
   const bookmarks=getBookmarks();
