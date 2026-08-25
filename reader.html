@@ -281,30 +281,100 @@ function openSearch(){
   bar.classList.add("open");
   document.getElementById("searchInput").focus();
 }
+function getBookNumberFromName(name){
+  if(!name)return 0;
+  const clean=String(name).trim().toLowerCase();
+  const found=BOOKS.find(b=>b.en.toLowerCase()===clean || b.zh.toLowerCase()===clean);
+  return found?.n||0;
+}
+
+function parseReferenceKey(key){
+  const text=String(key||"").trim();
+  const m=text.match(/^(.+?)\s+(\d+)(?::(\d+))?$/);
+  if(!m)return {};
+  return {
+    bookName:m[1],
+    chapter:Number(m[2])||0,
+    verse:Number(m[3])||0
+  };
+}
+
 function extractSearchHits(payload,translation){
   const hits=[];
-  const results=payload?.results||{};
-  Object.values(results).forEach(chapterObj=>{
-    if(!chapterObj || typeof chapterObj!=="object")return;
-    const book=Number(chapterObj.book_nr ?? chapterObj.book_number ?? chapterObj.book ?? 0);
-    const chapter=Number(chapterObj.chapter ?? chapterObj.chapter_nr ?? chapterObj.chapter_number ?? 0);
-    const verses=Array.isArray(chapterObj.verses) ? chapterObj.verses : [];
-    verses.forEach((v,i)=>{
-      const verse=Number(v.verse ?? v.verse_nr ?? v.number ?? i+1);
-      const text=String(v.text ?? v.scripture ?? v.value ?? "").trim();
-      if(book&&chapter&&verse&&text)hits.push({book,chapter,verse,text,translation});
-    });
-  });
+  const seen=new Set();
+
+  function addHit(book,chapter,verse,text){
+    book=Number(book)||0;
+    chapter=Number(chapter)||0;
+    verse=Number(verse)||0;
+    text=String(text||"").trim();
+    if(!book || !chapter || !verse || !text)return;
+    const key=`${translation}-${book}-${chapter}-${verse}`;
+    if(seen.has(key))return;
+    seen.add(key);
+    hits.push({book,chapter,verse,text,translation});
+  }
+
+  function walk(node,ctx={}){
+    if(node==null)return;
+
+    if(Array.isArray(node)){
+      node.forEach((item,i)=>walk(item,{...ctx,arrayIndex:i}));
+      return;
+    }
+
+    if(typeof node!=="object")return;
+
+    const nodeBookName=node.book_name ?? node.bookName ?? node.name ?? ctx.bookName;
+    const nodeBook=Number(
+      node.book_nr ?? node.book_number ?? node.book_num ?? node.book ??
+      ctx.book ?? getBookNumberFromName(nodeBookName)
+    )||0;
+    const nodeChapter=Number(
+      node.chapter_nr ?? node.chapter_number ?? node.chapter ?? ctx.chapter
+    )||0;
+    const nodeVerse=Number(
+      node.verse_nr ?? node.verse_number ?? node.verse ?? node.number ?? ctx.verse
+    )||0;
+
+    const text=node.text ?? node.scripture ?? node.value ?? node.verse_text;
+    if(text && nodeBook && nodeChapter && nodeVerse){
+      addHit(nodeBook,nodeChapter,nodeVerse,text);
+    }
+
+    if(Array.isArray(node.verses)){
+      node.verses.forEach((v,i)=>{
+        const verseNum=Number(v?.verse ?? v?.verse_nr ?? v?.number ?? i+1)||0;
+        const verseText=v?.text ?? v?.scripture ?? v?.value ?? v?.verse_text;
+        addHit(nodeBook,nodeChapter,verseNum,verseText);
+      });
+    }
+
+    for(const [key,value] of Object.entries(node)){
+      if(key==="verses" || key==="query" || key==="matches")continue;
+      if(!value || typeof value!=="object")continue;
+
+      const parsed=parseReferenceKey(key);
+      const parsedBook=getBookNumberFromName(parsed.bookName);
+      walk(value,{
+        book:parsedBook || nodeBook || ctx.book,
+        bookName:parsed.bookName || nodeBookName || ctx.bookName,
+        chapter:parsed.chapter || nodeChapter || ctx.chapter,
+        verse:parsed.verse || ctx.verse
+      });
+    }
+  }
+
+  walk(payload?.results || {});
   return hits;
 }
 
 async function searchTranslation(code,q){
   const all=[];
   let offset=0;
-  const limit=1000;
-  let total=0;
+  const limit=100; // GetBible's public search service is bounded to 100 per page.
 
-  do{
+  while(true){
     const params=new URLSearchParams({
       q,
       scope:"bible",
@@ -312,17 +382,18 @@ async function searchTranslation(code,q){
       limit:String(limit),
       offset:String(offset)
     });
+
     const payload=await fetchJSON(`https://search.getbible.net/v2/${code}?${params.toString()}`);
     const page=extractSearchHits(payload,code);
     all.push(...page);
 
-    total=Number(payload?.query?.total ?? page.length);
     const returned=Number(payload?.query?.returned ?? page.length);
+    const total=Number(payload?.query?.total ?? all.length);
     const hasMore=Boolean(payload?.query?.has_more);
 
-    if(!hasMore || returned===0)break;
+    if(!hasMore || returned<=0 || all.length>=total)break;
     offset+=returned;
-  }while(offset<total);
+  }
 
   return all;
 }
@@ -510,8 +581,8 @@ load();
 <style>
 /* v0.6 safe layout refinement */
 @media(min-width:1100px){
-  .reader:not(.side){width:min(calc(100% - 96px),1160px)!important;max-width:none!important;}
-  .reader.side{width:min(calc(100% - 72px),1440px)!important;max-width:none!important;}
+  .reader:not(.side){width:min(calc(100% - 72px),1240px)!important;max-width:none!important;}
+  .reader.side{width:min(calc(100% - 48px),1560px)!important;max-width:none!important;}
   .reader.side .content.side-by-side{
     column-gap:clamp(28px,2.4vw,46px)!important;
   }
