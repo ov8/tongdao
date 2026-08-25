@@ -317,3 +317,73 @@ load();
 </script>
 </body>
 </html>
+<style>
+/* v0.5 mobile fixes */
+.mobile-bottom-nav{display:none}
+@media(max-width:800px){
+  /* Force TRUE two-column side-by-side on phone */
+  .reader.side .verse .content,
+  .reader .content.side-by-side{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+    gap:14px !important;
+    align-items:start !important;
+  }
+  .reader.side .verse .content > *,
+  .reader .content.side-by-side > *{min-width:0!important}
+  .reader.side .zh,.reader .content.side-by-side .zh{
+    font-size:15px!important;line-height:1.48!important
+  }
+  .reader.side .py,.reader .content.side-by-side .py{
+    font-size:10.5px!important;line-height:1.35!important
+  }
+  .reader.side .en,.reader .content.side-by-side .en{
+    font-size:14px!important;line-height:1.5!important
+  }
+
+  /* Persistent mobile app nav */
+  .mobile-bottom-nav{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:40;
+    background:rgba(251,250,247,.97);
+    backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+    min-height:64px;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .mobile-bottom-nav button{
+    border:0;background:transparent;color:var(--ink);
+    padding:8px 3px 7px;font-size:11px;line-height:1.15;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  }
+  .mobile-bottom-nav .ico{font-size:20px;color:var(--forest)}
+  .reader{padding-bottom:110px!important}
+}
+</style>
+
+<nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+  <button id="mobileRead"><span class="ico">▤</span><span>閱讀<br>Read</span></button>
+  <button id="mobileSearch"><span class="ico">⌕</span><span>搜尋<br>Search</span></button>
+  <button id="mobileBookmarks"><span class="ico">☆</span><span>書籤<br>Saved</span></button>
+  <button id="mobileSettings"><span class="ico">⚙</span><span>設定<br>Settings</span></button>
+</nav>
+
+<script>
+(function(){
+  function safeClick(id){
+    const el=document.getElementById(id);
+    if(el) el.click();
+  }
+  const mr=document.getElementById("mobileRead");
+  const ms=document.getElementById("mobileSearch");
+  const mb=document.getElementById("mobileBookmarks");
+  const mt=document.getElementById("mobileSettings");
+  if(mr) mr.onclick=()=>safeClick("readBtn");
+  if(ms) ms.onclick=()=>safeClick("searchBtn");
+  if(mb) mb.onclick=()=>safeClick("bookmarksBtn");
+  if(mt) mt.onclick=()=>safeClick("settingsBtn");
+})();
+</script>
