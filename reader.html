@@ -1,191 +1,244 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>同道 Bible — Reader v3</title>
+<title>同道 Bible — Reader MVP</title>
+<script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.26.0/dist/index.js"></script>
 <style>
 :root{
-  --paper:#fbfaf7; --card:#fffdf9; --ink:#171b18; --muted:#746f66;
-  --line:#eadfce; --gold:#a77d3f; --green:#10221d; --pinyin:#2b775f;
-  --soft:#f3eadc; --scale:1;
+  --forest:#0F1F1A;--sage:#52665B;--gold:#C79A5A;--cream:#F1E9DE;
+  --paper:#FBFAF7;--white:#FFFFFF;--ink:#1D211E;--muted:#77736C;--line:#E7DED1
 }
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 12% 8%,rgba(167,125,63,.10),transparent 30%),var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.app{min-height:100vh;display:grid;grid-template-columns:270px 1fr}
-aside{border-right:1px solid var(--line);padding:24px 20px;background:rgba(255,255,255,.44);height:100vh;position:sticky;top:0}
-.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:30px}
-.logo-mark{width:42px;height:42px;border-radius:14px;background:#fff;position:relative;border:1px solid var(--line);box-shadow:0 10px 30px rgba(45,34,18,.08);overflow:hidden}
-.logo-mark svg{position:absolute;inset:5px;width:32px;height:32px}
-.logo-mark .star{position:absolute;right:5px;top:3px;color:var(--gold);font-size:13px}
-.wordmark{font-size:21px;font-weight:650}.wordmark .cn{font-family:"Kaiti TC","STKaiti","KaiTi",serif;color:var(--green);font-size:27px;letter-spacing:-.06em;margin-right:6px}.wordmark .en{font-family:Georgia,serif}
-.nav{display:grid;gap:8px}.nav button{border:1px solid transparent;background:transparent;color:var(--ink);border-radius:14px;padding:13px 14px;text-align:left;font-size:15px;cursor:pointer}.nav button.active{background:var(--soft);border-color:#eadcc7;color:var(--green);font-weight:650}
-.card{margin-top:28px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--card)}.card small{display:block;color:var(--muted);margin-bottom:8px}.today-ref{font-weight:700}.today-text{color:var(--muted);font-size:13px;line-height:1.45}
-.panel{margin-top:22px;display:grid;gap:14px}.label{color:var(--muted);font-size:13px;margin:0 0 7px}.segments{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:6px;display:grid;gap:6px}.segments button{border:0;border-radius:10px;padding:10px;background:transparent;color:var(--ink);cursor:pointer;text-align:left}.segments button.active{background:var(--soft);font-weight:650;color:var(--green)}
-.toggle{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 13px;display:flex;justify-content:space-between;align-items:center;font-size:14px}.switch{width:44px;height:24px;border-radius:999px;background:#c8c8c8;position:relative;cursor:pointer}.switch:after{content:"";position:absolute;width:20px;height:20px;left:2px;top:2px;background:#fff;border-radius:50%}.switch.on{background:#4d8f72}.switch.on:after{left:22px}
-main{min-width:0}.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(251,250,247,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:5}.left,.right{display:flex;gap:10px;align-items:center}select,.topbar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:15px}.topbar button{cursor:pointer}.mobile{display:none}
-.reader{max-width:1050px;margin:auto;padding:28px 38px 72px}.heading{display:flex;align-items:baseline;gap:15px;margin-bottom:14px}.heading h1{margin:0;font-size:30px;letter-spacing:-.02em}.heading span{color:var(--muted);font-size:15px}
-.testament-label{margin:18px 0 8px 48px;color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.verse{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:9px 0}.num{color:var(--gold);font-family:Georgia,serif;font-size:15px;padding-top:4px}
-.content{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}.translation{min-width:0}.translation + .translation{margin-top:0}
-.text{font-size:calc(20px*var(--scale));line-height:1.38}.text.en{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.01em}.text.zh{font-family:"Noto Serif CJK TC","Songti TC","PingFang TC",serif;font-size:calc(21px*var(--scale));line-height:1.42}.pinyin{color:var(--pinyin);font-size:calc(13.5px*var(--scale));line-height:1.32;margin-top:3px}
-.passage-note{margin:22px 0 0 48px;color:var(--muted);font-size:12px;line-height:1.6}.divider{height:1px;background:var(--line);margin:4px 0 2px 48px}
-.mode-en .content,.mode-zh .content{display:flex;flex-direction:column;gap:4px}.mode-en .text.en,.mode-zh .text.zh{font-size:calc(21px*var(--scale));line-height:1.38}.mode-en .text.zh,.mode-zh .text.en{font-size:calc(18px*var(--scale));line-height:1.35;color:#32342f}
-
-.mobile-overlay{display:none}
-.mobile-drawer{display:none}
-body.menu-open{overflow:hidden}
-.bottom{display:none}
-
-@media(max-width:900px){.app{display:block}aside{display:none}.mobile{display:inline-block}
-.mobile-overlay{display:block;position:fixed;inset:0;background:rgba(16,24,22,.28);z-index:20;opacity:0;pointer-events:none;transition:.16s}
-.mobile-drawer{display:block;position:fixed;left:0;top:0;bottom:0;width:min(84vw,310px);background:var(--paper);border-right:1px solid var(--line);z-index:21;padding:22px 18px;transform:translateX(-100%);transition:.18s ease;box-shadow:20px 0 60px rgba(0,0,0,.12)}
-body.menu-open .mobile-overlay{opacity:1;pointer-events:auto}
-body.menu-open .mobile-drawer{transform:translateX(0)}
-.mobile-drawer .logo-row{margin-bottom:22px}
-.mobile-drawer .nav{margin-bottom:20px}
-.topbar{height:62px;padding:0 14px}.topbar select{max-width:148px}.reader{padding:22px 18px 86px}.content{display:block}.translation{margin-bottom:4px}.text,.text.en,.text.zh{font-size:calc(17.5px*var(--scale));line-height:1.36}.pinyin{font-size:calc(12.5px*var(--scale));line-height:1.3}.heading h1{font-size:24px}.verse{grid-template-columns:28px 1fr;gap:8px;padding:8px 0}.passage-note{margin-left:36px}.divider{margin-left:36px}.testament-label{margin-left:36px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;bottom:0;left:0;right:0;border-top:1px solid var(--line);background:rgba(251,250,247,.95);z-index:8}.bottom button{border:0;background:transparent;color:var(--ink);padding:10px 4px;font-size:12px;display:grid;gap:2px}}
+html{font-size:100%;scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+button,select{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
+aside{border-right:1px solid var(--line);background:#F8F4ED;padding:24px 18px;position:sticky;top:0;height:100vh}
+.brand{margin:0 8px 30px;font-size:24px;font-weight:700;color:var(--forest)}.brand .cn{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;margin-right:7px}
+.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;padding:12px;border-radius:10px;text-align:left;color:#454842}.nav .active{background:var(--cream);font-weight:700;color:var(--forest)}
+.settings{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}.small{font-size:12px;color:var(--muted);margin:0 0 8px}
+.mode{display:grid;gap:6px}.mode button{border:1px solid var(--line);background:#fff;padding:9px 10px;border-radius:9px;text-align:left}.mode .active{border-color:var(--gold);background:#FBF5EB;font-weight:700;color:var(--forest)}
+.coming{margin-top:16px;padding:10px;border:1px dashed var(--line);border-radius:9px;color:var(--muted);font-size:12px;line-height:1.4}
+main{min-width:0}.topbar{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 26px;position:sticky;top:0;background:rgba(251,250,247,.95);backdrop-filter:blur(12px);z-index:5}
+.topbar select,.menu{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:10px 12px}.book{min-width:230px}.menu{display:none}.spacer{flex:1}
+.reader{max-width:880px;margin:0 auto;padding:34px 42px 96px}
+.heading{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}.heading h1{margin:0;font-family:Georgia,"Noto Serif TC",serif;font-size:30px}.heading span{font-size:14px;color:var(--muted)}
+.testament{margin:18px 0 12px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.translation-note{font-size:12px;color:var(--muted);margin:0 0 14px}
+.verse{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #EEE8DF}.num{color:var(--gold);font-family:Georgia,serif;padding-top:4px}
+.content{display:flex;flex-direction:column;gap:5px}.zh{font-family:"Noto Serif TC","Songti TC","PingFang TC",serif;font-size:clamp(1.18rem,1.4vw,1.34rem);line-height:1.62;margin:0}.en{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.02rem,1.15vw,1.15rem);line-height:1.62;color:#3E403C;margin:0}.py{font-size:.84rem;line-height:1.55;color:#4C7566;margin:0}
+.side .content{display:grid;grid-template-columns:1fr 1fr;gap:36px}.loading,.error{padding:70px 10px;text-align:center;color:var(--muted);line-height:1.6}.error{color:#8A4C40}.retry{margin-top:12px;border:1px solid var(--line);background:#fff;padding:9px 13px;border-radius:9px;cursor:pointer}
+.footer-note{margin:24px 0 0 46px;color:var(--muted);font-size:11px;line-height:1.55}.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin:38px 0 0 46px}.chapter-nav button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;color:var(--forest);cursor:pointer}.chapter-nav button:disabled{opacity:.35;cursor:default}.reader-tools{display:flex;gap:8px;align-items:center}.toolbtn{min-width:44px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--forest);cursor:pointer;font-weight:700}.skip{position:absolute;left:-9999px;top:8px;background:var(--forest);color:#fff;padding:10px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}.verse:target{background:#fbf5eb}.verse{scroll-margin-top:80px}
+.scrim{display:none}
+@media(max-width:800px){
+  .app{display:block}aside{position:fixed;left:0;top:0;bottom:0;width:min(84vw,300px);height:100vh;z-index:21;transform:translateX(-100%);transition:.18s;background:#F8F4ED}.app.open aside{transform:translateX(0)}
+  .scrim{position:fixed;inset:0;background:rgba(15,31,26,.25);z-index:20}.app.open .scrim{display:block}
+  .menu{display:block}.topbar{height:60px;padding:0 12px;overflow:auto}.book{min-width:180px}.reader{padding:24px 17px 72px}.heading h1{font-size:24px}.verse{grid-template-columns:27px 1fr;gap:8px;padding:8px 0}.zh{font-size:20px;line-height:1.4}.en{font-size:17px;line-height:1.42}.side .content{display:flex;flex-direction:column;gap:5px}.footer-note{margin-left:35px}
+}
 </style>
 </head>
 <body>
-
-<div class="mobile-overlay" id="mobileOverlay"></div>
-<div class="mobile-drawer" id="mobileDrawer">
-  <div class="logo-row">
-    <span class="logo-mark">
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M10 48 C21 42 20 31 31 24 C37 20 39 13 31 8 C46 12 49 25 39 33 C31 40 27 46 19 56" fill="none" stroke="#10221d" stroke-width="7" stroke-linecap="round"/>
-        <path d="M9 49 C23 45 34 43 48 41" fill="none" stroke="#10221d" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-      <span class="star">✦</span>
-    </span>
-    <div class="wordmark"><span class="cn">同道</span><span class="en">Bible</span></div>
-  </div>
-  <nav class="nav"><button class="active">閱讀 Read</button><button>搜尋 Search</button><button>書籤 Bookmarks</button><button>歷史 History</button><button>設定 Settings</button></nav>
-  <div class="panel">
-    <div><p class="label">Reading order 閱讀順序</p><div class="segments" id="mobileOrders"><button data-mode="mode-side">Side by side 並排</button><button data-mode="mode-en">English → 中文</button><button class="active" data-mode="mode-zh">中文 → English</button></div></div>
-    <div class="toggle"><span>Show pinyin 顯示拼音</span><span id="mobilePinyinSwitch" class="switch on"></span></div>
-  </div>
-</div>
-
-<div class="app">
+<a class="skip" href="#reader">Skip to Scripture</a>
+<div class="app" id="app">
+<div class="scrim" id="scrim"></div>
 <aside>
-  <div class="logo-row">
-    <span class="logo-mark">
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M10 48 C21 42 20 31 31 24 C37 20 39 13 31 8 C46 12 49 25 39 33 C31 40 27 46 19 56" fill="none" stroke="#10221d" stroke-width="7" stroke-linecap="round"/>
-        <path d="M9 49 C23 45 34 43 48 41" fill="none" stroke="#10221d" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-      <span class="star">✦</span>
-    </span>
-    <div class="wordmark"><span class="cn">同道</span><span class="en">Bible</span></div>
-  </div>
-  <nav class="nav"><button class="active">閱讀 Read</button><button>搜尋 Search</button><button>書籤 Bookmarks</button><button>歷史 History</button><button>設定 Settings</button></nav>
-  <div class="card"><small>Today 今日</small><div class="today-ref">John 3:16 約翰福音 3:16</div><div class="today-text">For God so loved the world...<br>神愛世人，甚至將他的獨生子...</div></div>
-  <div class="panel">
-    <div><p class="label">Reading order 閱讀順序</p><div class="segments" id="orders"><button data-mode="mode-side">Side by side 並排</button><button data-mode="mode-en">English → 中文</button><button class="active" data-mode="mode-zh">中文 → English</button></div></div>
-    <div class="toggle"><span>Show pinyin 顯示拼音</span><span id="pinyinSwitch" class="switch on"></span></div>
+  <div class="brand"><span class="cn">同道</span>Bible</div>
+  <nav class="nav">
+    <button class="active">閱讀 Read</button>
+    <button disabled>搜尋 Search</button>
+    <button disabled>書籤 Bookmarks</button>
+    <button disabled>設定 Settings</button>
+  </nav>
+  <div class="settings">
+    <p class="small">Reading order 閱讀順序</p>
+    <div class="mode" id="modes">
+      <button data-mode="side">Side by side 並排</button>
+      <button data-mode="en">English → 中文</button>
+      <button class="active" data-mode="zh">中文 → English</button>
+    </div>
+    <div class="toggle" style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;font-size:13px"><span>Show pinyin 顯示拼音</span><span class="switch on" id="pinyinSwitch" style="width:38px;height:22px;border-radius:99px;background:var(--forest);padding:3px;cursor:pointer"><span id="pinyinKnob" style="display:block;width:16px;height:16px;background:white;border-radius:50%;transform:translateX(16px)"></span></span></div>
   </div>
 </aside>
+
 <main>
 <header class="topbar">
-  <div class="left"><button class="mobile">☰</button><select id="bookSelect"><option value="john">John 約翰福音</option><option value="psalm">Psalm 詩篇</option><option value="genesis">Genesis 創世記</option></select><select id="chapterSelect"><option>3</option></select></div>
-  <div class="right"><button>⌕</button><button id="fontBtn">Aa</button><button id="pinyinBtn">拼</button></div>
+  <button class="menu" id="menu">☰</button>
+  <select class="book" id="book"></select>
+  <select id="chapter"></select>
+  <div class="spacer"></div><div class="reader-tools" aria-label="Reading controls"><button class="toolbtn" id="fontDown" aria-label="Decrease text size">A−</button><button class="toolbtn" id="fontUp" aria-label="Increase text size">A+</button></div>
 </header>
-<section class="reader mode-zh" id="reader">
-  <div class="heading"><h1 id="title">John 3:16–21</h1><span id="subtitle">約翰福音 3:16–21 · ESV × 和合本（繁體）</span></div>
-  <div id="testament" class="testament-label">New Testament 新約</div>
-  <article id="verses"></article>
-  <p class="passage-note">ESV® Text Edition: 2016. Copyright © 2001 by Crossway Bibles, a publishing ministry of Good News Publishers. Chinese text shown here is sample prototype text for layout testing.</p>
-</section>
+
+<section class="reader" id="reader"></section>
 </main>
-<nav class="bottom"><button>閱讀<br>Read</button><button>搜尋<br>Search</button><button>書籤<br>Saved</button><button>設定<br>Settings</button></nav>
 </div>
+
 <script>
-const books=[
-[1,"Genesis","創世記",50,"OT"],[2,"Exodus","出埃及記",40,"OT"],[3,"Leviticus","利未記",27,"OT"],[4,"Numbers","民數記",36,"OT"],[5,"Deuteronomy","申命記",34,"OT"],
-[6,"Joshua","約書亞記",24,"OT"],[7,"Judges","士師記",21,"OT"],[8,"Ruth","路得記",4,"OT"],[9,"1 Samuel","撒母耳記上",31,"OT"],[10,"2 Samuel","撒母耳記下",24,"OT"],
-[11,"1 Kings","列王紀上",22,"OT"],[12,"2 Kings","列王紀下",25,"OT"],[13,"1 Chronicles","歷代志上",29,"OT"],[14,"2 Chronicles","歷代志下",36,"OT"],[15,"Ezra","以斯拉記",10,"OT"],
-[16,"Nehemiah","尼希米記",13,"OT"],[17,"Esther","以斯帖記",10,"OT"],[18,"Job","約伯記",42,"OT"],[19,"Psalms","詩篇",150,"OT"],[20,"Proverbs","箴言",31,"OT"],
-[21,"Ecclesiastes","傳道書",12,"OT"],[22,"Song of Solomon","雅歌",8,"OT"],[23,"Isaiah","以賽亞書",66,"OT"],[24,"Jeremiah","耶利米書",52,"OT"],[25,"Lamentations","耶利米哀歌",5,"OT"],
-[26,"Ezekiel","以西結書",48,"OT"],[27,"Daniel","但以理書",12,"OT"],[28,"Hosea","何西阿書",14,"OT"],[29,"Joel","約珥書",3,"OT"],[30,"Amos","阿摩司書",9,"OT"],
-[31,"Obadiah","俄巴底亞書",1,"OT"],[32,"Jonah","約拿書",4,"OT"],[33,"Micah","彌迦書",7,"OT"],[34,"Nahum","那鴻書",3,"OT"],[35,"Habakkuk","哈巴谷書",3,"OT"],
-[36,"Zephaniah","西番雅書",3,"OT"],[37,"Haggai","哈該書",2,"OT"],[38,"Zechariah","撒迦利亞書",14,"OT"],[39,"Malachi","瑪拉基書",4,"OT"],
-[40,"Matthew","馬太福音",28,"NT"],[41,"Mark","馬可福音",16,"NT"],[42,"Luke","路加福音",24,"NT"],[43,"John","約翰福音",21,"NT"],[44,"Acts","使徒行傳",28,"NT"],
-[45,"Romans","羅馬書",16,"NT"],[46,"1 Corinthians","哥林多前書",16,"NT"],[47,"2 Corinthians","哥林多後書",13,"NT"],[48,"Galatians","加拉太書",6,"NT"],[49,"Ephesians","以弗所書",6,"NT"],
-[50,"Philippians","腓立比書",4,"NT"],[51,"Colossians","歌羅西書",4,"NT"],[52,"1 Thessalonians","帖撒羅尼迦前書",5,"NT"],[53,"2 Thessalonians","帖撒羅尼迦後書",3,"NT"],[54,"1 Timothy","提摩太前書",6,"NT"],
-[55,"2 Timothy","提摩太後書",4,"NT"],[56,"Titus","提多書",3,"NT"],[57,"Philemon","腓利門書",1,"NT"],[58,"Hebrews","希伯來書",13,"NT"],[59,"James","雅各書",5,"NT"],
-[60,"1 Peter","彼得前書",5,"NT"],[61,"2 Peter","彼得後書",3,"NT"],[62,"1 John","約翰一書",5,"NT"],[63,"2 John","約翰二書",1,"NT"],[64,"3 John","約翰三書",1,"NT"],[65,"Jude","猶大書",1,"NT"],[66,"Revelation","啟示錄",22,"NT"]];
+const BOOKS=[
+{n:1,en:"Genesis",zh:"創世記",c:50,t:"OT"},{n:2,en:"Exodus",zh:"出埃及記",c:40,t:"OT"},{n:3,en:"Leviticus",zh:"利未記",c:27,t:"OT"},{n:4,en:"Numbers",zh:"民數記",c:36,t:"OT"},{n:5,en:"Deuteronomy",zh:"申命記",c:34,t:"OT"},
+{n:6,en:"Joshua",zh:"約書亞記",c:24,t:"OT"},{n:7,en:"Judges",zh:"士師記",c:21,t:"OT"},{n:8,en:"Ruth",zh:"路得記",c:4,t:"OT"},{n:9,en:"1 Samuel",zh:"撒母耳記上",c:31,t:"OT"},{n:10,en:"2 Samuel",zh:"撒母耳記下",c:24,t:"OT"},
+{n:11,en:"1 Kings",zh:"列王紀上",c:22,t:"OT"},{n:12,en:"2 Kings",zh:"列王紀下",c:25,t:"OT"},{n:13,en:"1 Chronicles",zh:"歷代志上",c:29,t:"OT"},{n:14,en:"2 Chronicles",zh:"歷代志下",c:36,t:"OT"},{n:15,en:"Ezra",zh:"以斯拉記",c:10,t:"OT"},
+{n:16,en:"Nehemiah",zh:"尼希米記",c:13,t:"OT"},{n:17,en:"Esther",zh:"以斯帖記",c:10,t:"OT"},{n:18,en:"Job",zh:"約伯記",c:42,t:"OT"},{n:19,en:"Psalms",zh:"詩篇",c:150,t:"OT"},{n:20,en:"Proverbs",zh:"箴言",c:31,t:"OT"},
+{n:21,en:"Ecclesiastes",zh:"傳道書",c:12,t:"OT"},{n:22,en:"Song of Solomon",zh:"雅歌",c:8,t:"OT"},{n:23,en:"Isaiah",zh:"以賽亞書",c:66,t:"OT"},{n:24,en:"Jeremiah",zh:"耶利米書",c:52,t:"OT"},{n:25,en:"Lamentations",zh:"耶利米哀歌",c:5,t:"OT"},
+{n:26,en:"Ezekiel",zh:"以西結書",c:48,t:"OT"},{n:27,en:"Daniel",zh:"但以理書",c:12,t:"OT"},{n:28,en:"Hosea",zh:"何西阿書",c:14,t:"OT"},{n:29,en:"Joel",zh:"約珥書",c:3,t:"OT"},{n:30,en:"Amos",zh:"阿摩司書",c:9,t:"OT"},
+{n:31,en:"Obadiah",zh:"俄巴底亞書",c:1,t:"OT"},{n:32,en:"Jonah",zh:"約拿書",c:4,t:"OT"},{n:33,en:"Micah",zh:"彌迦書",c:7,t:"OT"},{n:34,en:"Nahum",zh:"那鴻書",c:3,t:"OT"},{n:35,en:"Habakkuk",zh:"哈巴谷書",c:3,t:"OT"},
+{n:36,en:"Zephaniah",zh:"西番雅書",c:3,t:"OT"},{n:37,en:"Haggai",zh:"哈該書",c:2,t:"OT"},{n:38,en:"Zechariah",zh:"撒迦利亞書",c:14,t:"OT"},{n:39,en:"Malachi",zh:"瑪拉基書",c:4,t:"OT"},
+{n:40,en:"Matthew",zh:"馬太福音",c:28,t:"NT"},{n:41,en:"Mark",zh:"馬可福音",c:16,t:"NT"},{n:42,en:"Luke",zh:"路加福音",c:24,t:"NT"},{n:43,en:"John",zh:"約翰福音",c:21,t:"NT"},{n:44,en:"Acts",zh:"使徒行傳",c:28,t:"NT"},
+{n:45,en:"Romans",zh:"羅馬書",c:16,t:"NT"},{n:46,en:"1 Corinthians",zh:"哥林多前書",c:16,t:"NT"},{n:47,en:"2 Corinthians",zh:"哥林多後書",c:13,t:"NT"},{n:48,en:"Galatians",zh:"加拉太書",c:6,t:"NT"},{n:49,en:"Ephesians",zh:"以弗所書",c:6,t:"NT"},
+{n:50,en:"Philippians",zh:"腓立比書",c:4,t:"NT"},{n:51,en:"Colossians",zh:"歌羅西書",c:4,t:"NT"},{n:52,en:"1 Thessalonians",zh:"帖撒羅尼迦前書",c:5,t:"NT"},{n:53,en:"2 Thessalonians",zh:"帖撒羅尼迦後書",c:3,t:"NT"},{n:54,en:"1 Timothy",zh:"提摩太前書",c:6,t:"NT"},
+{n:55,en:"2 Timothy",zh:"提摩太後書",c:4,t:"NT"},{n:56,en:"Titus",zh:"提多書",c:3,t:"NT"},{n:57,en:"Philemon",zh:"腓利門書",c:1,t:"NT"},{n:58,en:"Hebrews",zh:"希伯來書",c:13,t:"NT"},{n:59,en:"James",zh:"雅各書",c:5,t:"NT"},
+{n:60,en:"1 Peter",zh:"彼得前書",c:5,t:"NT"},{n:61,en:"2 Peter",zh:"彼得後書",c:3,t:"NT"},{n:62,en:"1 John",zh:"約翰一書",c:5,t:"NT"},{n:63,en:"2 John",zh:"約翰二書",c:1,t:"NT"},{n:64,en:"3 John",zh:"約翰三書",c:1,t:"NT"},
+{n:65,en:"Jude",zh:"猶大書",c:1,t:"NT"},{n:66,en:"Revelation",zh:"啟示錄",c:22,t:"NT"}
+];
 
-const bookSelect=document.getElementById("bookSelect"),chapterSelect=document.getElementById("chapterSelect");
-bookSelect.innerHTML="";
-books.forEach(b=>bookSelect.add(new Option(`${b[2]} · ${b[1]}`,b[0])));
-bookSelect.value="43";
-let currentBook=43,currentChapter=3,pinyin=false,scale=1,mode="mode-zh",verses=[];
+const bookEl=document.getElementById("book");
+const chapterEl=document.getElementById("chapter");
+const reader=document.getElementById("reader");
+let currentBook=43,currentChapter=3,mode="zh",showPinyin=true,fontScale=1;
 
-function fillChapters(){
- const b=books.find(x=>x[0]===Number(bookSelect.value));
- chapterSelect.innerHTML="";
- for(let i=1;i<=b[3];i++)chapterSelect.add(new Option(i,i));
- chapterSelect.value=String(Math.min(currentChapter,b[3]));
+function setupBooks(){
+  const ot=document.createElement("optgroup");ot.label="舊約 · Old Testament";
+  const nt=document.createElement("optgroup");nt.label="新約 · New Testament";
+  BOOKS.forEach(b=>{
+    const o=new Option(`${b.zh} · ${b.en}`,b.n);
+    (b.t==="OT"?ot:nt).appendChild(o);
+  });
+  bookEl.appendChild(ot);bookEl.appendChild(nt);bookEl.value=String(currentBook);
 }
-fillChapters();
+function setupChapters(){
+  const b=BOOKS.find(x=>x.n===currentBook);
+  chapterEl.innerHTML="";
+  for(let i=1;i<=b.c;i++)chapterEl.add(new Option(String(i),String(i)));
+  chapterEl.value=String(Math.min(currentChapter,b.c));
+}
+setupBooks();setupChapters();
 
-async function loadChapter(){
- currentBook=Number(bookSelect.value);currentChapter=Number(chapterSelect.value);
- const reader=document.getElementById("reader");
- reader.innerHTML='<div style="padding:45px;color:#777;text-align:center">正在載入 Scripture…</div>';
- try{
-  const r=await fetch(`https://api.getbible.net/v2/cut/${currentBook}/${currentChapter}.json`);
-  if(!r.ok)throw new Error(`HTTP ${r.status}`);
-  const data=await r.json();
-  verses=(data.verses||[]).map(v=>({n:v.verse,zh:v.text,en:"English translation coming next.",py:""}));
-  render();
- }catch(e){
-  reader.innerHTML='<div style="padding:45px;color:#8a4c40;text-align:center">抱歉，這一章暫時無法載入。<br>Please refresh or try another chapter.</div>';
-  console.error(e);
- }
+function findVerseArray(obj){
+  if(!obj || typeof obj!=="object") return null;
+  if(Array.isArray(obj)){
+    if(obj.length && obj.every(x=>x && typeof x==="object") && obj.some(x=>("verse" in x || "verse_nr" in x) && ("text" in x || "scripture" in x))) return obj;
+    for(const item of obj){const r=findVerseArray(item);if(r)return r;}
+    return null;
+  }
+  if(Array.isArray(obj.verses)) return obj.verses;
+  for(const k of Object.keys(obj)){const r=findVerseArray(obj[k]);if(r)return r;}
+  return null;
+}
+function normaliseVerses(data){
+  const arr=findVerseArray(data);
+  if(!arr) return [];
+  return arr.map((v,i)=>({
+    n:Number(v.verse ?? v.verse_nr ?? v.number ?? (i+1)),
+    text:String(v.text ?? v.scripture ?? v.value ?? "").trim()
+  })).filter(v=>v.text);
+}
+async function fetchJSON(url){
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);
+  return r.json();
+}
+async function fetchChapter(translation,book,chapter){
+  const chapterURL=`https://api.getbible.net/v2/${translation}/${book}/${chapter}.json`;
+  try{
+    const data=await fetchJSON(chapterURL);
+    const verses=normaliseVerses(data);
+    if(verses.length)return verses;
+    throw new Error("No verse array in chapter response");
+  }catch(firstError){
+    const bookURL=`https://api.getbible.net/v2/${translation}/${book}.json`;
+    const data=await fetchJSON(bookURL);
+    const candidates=[];
+    (function walk(o){
+      if(!o||typeof o!=="object")return;
+      if(Array.isArray(o)){o.forEach(walk);return;}
+      const ch=Number(o.chapter ?? o.chapter_nr ?? o.number);
+      if(ch===chapter){const v=normaliseVerses(o);if(v.length)candidates.push(v);}
+      Object.values(o).forEach(walk);
+    })(data);
+    if(candidates.length)return candidates[0];
+    throw firstError;
+  }
 }
 
-function setMode(nextMode){
- mode=nextMode;
- document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
- document.getElementById("reader").className="reader "+mode;
- render();
+async function load(){
+  currentBook=Number(bookEl.value);currentChapter=Number(chapterEl.value);
+  reader.innerHTML='<div class="loading">正在載入經文…<br>Loading Scripture…</div>';
+  try{
+    const [zh,en]=await Promise.all([
+      fetchChapter("cut",currentBook,currentChapter),
+      fetchChapter("asv",currentBook,currentChapter)
+    ]);
+    render(zh,en);
+  }catch(err){
+    console.error(err);
+    reader.innerHTML=`<div class="error">這一章暫時無法載入。<br>This chapter did not load.<br><button class="retry" onclick="load()">Try again</button></div>`;
+  }
 }
-function setPinyin(v){
- pinyin=v;
- document.querySelectorAll("#pinyinSwitch,#mobilePinyinSwitch").forEach(s=>s&&s.classList.toggle("on",pinyin));
- render();
+
+function render(zh,en){
+  const b=BOOKS.find(x=>x.n===currentBook);
+  const englishByVerse=new Map(en.map(v=>[v.n,v.text]));
+  reader.className="reader"+(mode==="side"?" side":"");
+  let html=`<div class="heading"><h1>${b.zh} ${currentChapter}</h1><span>${b.en} ${currentChapter}</span></div>
+  <div class="testament">${b.t==="OT"?"舊約 · Old Testament":"新約 · New Testament"}</div>
+  <p class="translation-note">和合本（繁體字） × ASV <span style="opacity:.7">（ASV is temporary until secure ESV integration）</span></p>`;
+  zh.forEach(v=>{
+    const z=`<p class="zh">${escapeHtml(v.text)}</p>`;
+    let pyText="";
+    if(showPinyin && window.pinyinPro && window.pinyinPro.pinyin){
+      try{
+        pyText=window.pinyinPro.pinyin(v.text,{toneType:"symbol",type:"string",nonZh:"consecutive"});
+      }catch(e){ console.warn("Pinyin error",e); }
+    }
+    const py=showPinyin && pyText ? `<p class="py">${escapeHtml(pyText)}</p>` : "";
+    const e=`<p class="en">${escapeHtml(englishByVerse.get(v.n)||"")}</p>`;
+    const chineseBlock=z+py;
+    const content=mode==="en"?e+chineseBlock:chineseBlock+e;
+    html+=`<article class="verse" id="v${v.n}" aria-label="Verse ${v.n}"><div class="num" aria-hidden="true">${v.n}</div><div class="content">${content}</div></article>`;
+  });
+  const bIndex=BOOKS.findIndex(x=>x.n===currentBook);
+  const prevDisabled=currentChapter===1 && bIndex===0;
+  const nextDisabled=currentChapter===b.c && bIndex===BOOKS.length-1;
+  html+=`<div class="chapter-nav" aria-label="Chapter navigation"><button id="prevChapter" ${prevDisabled?"disabled":""}>← Previous</button><button id="nextChapter" ${nextDisabled?"disabled":""}>Next →</button></div>`;
+  html+=`<p class="footer-note">Chinese: Union Traditional / 和合本（繁體字） via GetBible. English: American Standard Version (public domain) via GetBible, used only as a temporary working English source until ESV is connected securely.</p>`;
+  reader.innerHTML=html;
+  reader.style.fontSize=`${fontScale}em`;
+  const prev=document.getElementById("prevChapter"), next=document.getElementById("nextChapter");
+  if(prev)prev.onclick=()=>moveChapter(-1);
+  if(next)next.onclick=()=>moveChapter(1);
 }
-function render(){
- const b=books.find(x=>x[0]===currentBook);
- document.getElementById("passageTitle").textContent=`${b[2]} ${currentChapter}`;
- document.getElementById("passageSub").textContent=`${b[1]} ${currentChapter} · 和合本（繁體字）`;
- const reader=document.getElementById("reader");
- reader.className="reader "+mode;
- reader.innerHTML=verses.map(v=>`<div class="verse">
-   <div class="vnum">${v.n}</div>
-   <div class="vcontent">
-     <div class="zh"><div class="zhtext">${escapeHtml(v.zh)}</div>${pinyin?'<div class="pinyin">Pinyin data layer coming next.</div>':''}</div>
-     <div class="en"><div class="entext">${v.en}</div></div>
-   </div>
- </div>`).join("")+`<p style="margin:24px 0 0 42px;color:#777;font-size:11px;line-height:1.5">Chinese Scripture: Union Traditional / 和合本（繁體字）, retrieved live from GetBible. English is intentionally not fetched yet so your private ESV token is never exposed in this public HTML file.</p>`;
- reader.style.fontSize=`${scale}em`;
+function moveChapter(delta){
+  const bIndex=BOOKS.findIndex(x=>x.n===currentBook), b=BOOKS[bIndex];
+  if(delta<0){
+    if(currentChapter>1) currentChapter--;
+    else if(bIndex>0){currentBook=BOOKS[bIndex-1].n;currentChapter=BOOKS[bIndex-1].c;}
+  }else{
+    if(currentChapter<b.c) currentChapter++;
+    else if(bIndex<BOOKS.length-1){currentBook=BOOKS[bIndex+1].n;currentChapter=1;}
+  }
+  bookEl.value=String(currentBook);setupChapters();chapterEl.value=String(currentChapter);load();window.scrollTo({top:0,behavior:"smooth"});
 }
 function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
-bookSelect.onchange=()=>{currentChapter=1;fillChapters();chapterSelect.value="1";loadChapter()};
-chapterSelect.onchange=loadChapter;
-document.querySelectorAll("#orders button, #mobileOrders button").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
-function togglePinyin(){setPinyin(!pinyin)}
-document.getElementById("pinyinSwitch").onclick=togglePinyin;
-if(document.getElementById("mobilePinyinSwitch"))document.getElementById("mobilePinyinSwitch").onclick=togglePinyin;
-document.getElementById("pinyinBtn").onclick=togglePinyin;
-document.querySelector(".mobile").onclick=()=>document.body.classList.add("menu-open");
-document.getElementById("mobileOverlay").onclick=()=>document.body.classList.remove("menu-open");
-document.getElementById("fontDown").onclick=()=>{scale=Math.max(.82,scale-.08);render()};
-document.getElementById("fontUp").onclick=()=>{scale=Math.min(1.35,scale+.08);render()};
-loadChapter();
+
+bookEl.onchange=()=>{currentBook=Number(bookEl.value);currentChapter=1;setupChapters();chapterEl.value="1";load()};
+chapterEl.onchange=()=>{currentChapter=Number(chapterEl.value);load()};
+document.querySelectorAll("#modes button").forEach(btn=>btn.onclick=()=>{
+  mode=btn.dataset.mode;
+  document.querySelectorAll("#modes button").forEach(x=>x.classList.toggle("active",x===btn));
+  load();
+});
+document.getElementById("menu").onclick=()=>document.getElementById("app").classList.add("open");
+document.getElementById("scrim").onclick=()=>document.getElementById("app").classList.remove("open");
+document.getElementById("fontDown").onclick=()=>{fontScale=Math.max(.85,fontScale-.1);load()};
+document.getElementById("fontUp").onclick=()=>{fontScale=Math.min(1.5,fontScale+.1);load()};
+document.getElementById("pinyinSwitch").onclick=()=>{
+  showPinyin=!showPinyin;
+  const sw=document.getElementById("pinyinSwitch"), knob=document.getElementById("pinyinKnob");
+  sw.style.background=showPinyin?"var(--forest)":"#c9c6bf";
+  knob.style.transform=showPinyin?"translateX(16px)":"translateX(0)";
+  load();
+};
+
+load();
 </script>
 </body>
 </html>
