@@ -181,6 +181,7 @@ async function fetchChapter(translation,book,chapter){
 }
 
 async function load(){
+  setViewHash("read");
   setReadingToolsVisible(true);
   currentBook=Number(bookEl.value);currentChapter=Number(chapterEl.value);
   reader.innerHTML='<div class="loading">正在載入經文…<br>Loading Scripture…</div>';
@@ -265,12 +266,27 @@ function setActiveSection(section){
   const desktop={read:'readBtn',search:'searchBtn',bookmarks:'bookmarksBtn',settings:'settingsBtn'};
   Object.entries(desktop).forEach(([key,id])=>document.getElementById(id)?.classList.toggle('active',key===section));
 }
+
+function setViewHash(view){
+  const hash = view==="read" ? "#read" : `#${view}`;
+  if(location.hash !== hash) history.replaceState(null,"",hash);
+}
+
+function restoreViewFromHash(){
+  const view=(location.hash||"#read").replace("#","");
+  if(view==="settings") showSettings();
+  else if(view==="bookmarks") showBookmarks();
+  else if(view==="search") openSearch();
+  else showReader();
+}
+
 function setReadingToolsVisible(visible){
   const tools=document.querySelector(".reader-tools");
   if(tools)tools.style.display=visible?"flex":"none";
 }
 
 function showBookmarks(){
+  setViewHash("bookmarks");
   setReadingToolsVisible(false);
   setActiveSection("bookmarks");
   const items=getBookmarks();
@@ -286,12 +302,14 @@ function showBookmarks(){
   });
 }
 function showReader(){
+  setViewHash("read");
   setReadingToolsVisible(true);
   setActiveSection("read");
   document.getElementById("searchbar").classList.remove("open");
   if(currentZh.length)render(currentZh,currentEn); else load();
 }
 function openSearch(){
+  setViewHash("search");
   setReadingToolsVisible(false);
   showReader();
   setActiveSection("search");
@@ -412,6 +430,7 @@ async function runSearch(){
 }
 
 function showSettings(){
+  setViewHash("settings");
   setReadingToolsVisible(false);
   setActiveSection('settings');
   document.getElementById('searchbar').classList.remove('open');
@@ -484,7 +503,7 @@ document.getElementById("pinyinSwitch").onclick=()=>{
   load();
 };
 
-load();
+restoreViewFromHash();
 </script>
 </body>
 </html>
@@ -589,4 +608,6 @@ load();
 .mobile-bottom-nav button{position:relative;}
 .nav button.active{font-weight:700;background:#f2e9dc;}
 </style>
-<script>setActiveSection('read');</script>
+<script>setActiveSection('read');
+window.addEventListener("hashchange", restoreViewFromHash);
+</script>
